@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
-  <title>静心&#39;s Blog</title>
+  <title>清欢&#39;s Blog</title>
   
   <subtitle>一个杂乱的笔记本</subtitle>
   <link href="/atom.xml" rel="self"/>
@@ -10,7 +10,7 @@
   <id>https://mingliangliu.com/</id>
   
   <author>
-    <name>静心</name>
+    <name>清欢</name>
     
   </author>
   
