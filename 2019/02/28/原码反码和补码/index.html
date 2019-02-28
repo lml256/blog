@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="Hexo, NexT">
+  <meta name="keywords" content="数字逻辑,">
 
 
 
@@ -81,16 +81,18 @@
 
 
 
-<meta name="description" content="一个杂乱的笔记本">
-<meta property="og:type" content="website">
-<meta property="og:title" content="清欢&#39;s Blog">
-<meta property="og:url" content="https://mingliangliu.com/categories/汇编/index.html">
+<meta name="description" content="原码反码和补码这里我们只讨论有符号数。我们都知道数在机器中都是以二进制表示的，而且常用二进制数的最高位表示其的正负，0为正，1为负 原码原码的表示法很简单，对于一个二进制数n,  当n为正数时，n的原码是在n上增加一个符号位0 当n为负数时，n的原码是在n上增加一个符号位1 n为0时，在原码中，有两种表示0的方式：0.0000 1.0000  反码对于一个二进制数n  当n为正数时，n的反码和原码">
+<meta name="keywords" content="数字逻辑">
+<meta property="og:type" content="article">
+<meta property="og:title" content="原码反码和补码">
+<meta property="og:url" content="https://mingliangliu.com/2019/02/28/原码反码和补码/index.html">
 <meta property="og:site_name" content="清欢&#39;s Blog">
-<meta property="og:description" content="一个杂乱的笔记本">
+<meta property="og:description" content="原码反码和补码这里我们只讨论有符号数。我们都知道数在机器中都是以二进制表示的，而且常用二进制数的最高位表示其的正负，0为正，1为负 原码原码的表示法很简单，对于一个二进制数n,  当n为正数时，n的原码是在n上增加一个符号位0 当n为负数时，n的原码是在n上增加一个符号位1 n为0时，在原码中，有两种表示0的方式：0.0000 1.0000  反码对于一个二进制数n  当n为正数时，n的反码和原码">
 <meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2019-02-28T09:54:15.726Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="清欢&#39;s Blog">
-<meta name="twitter:description" content="一个杂乱的笔记本">
+<meta name="twitter:title" content="原码反码和补码">
+<meta name="twitter:description" content="原码反码和补码这里我们只讨论有符号数。我们都知道数在机器中都是以二进制表示的，而且常用二进制数的最高位表示其的正负，0为正，1为负 原码原码的表示法很简单，对于一个二进制数n,  当n为正数时，n的原码是在n上增加一个符号位0 当n为负数时，n的原码是在n上增加一个符号位1 n为0时，在原码中，有两种表示0的方式：0.0000 1.0000  反码对于一个二进制数n  当n为正数时，n的反码和原码">
 
 
 
@@ -120,13 +122,13 @@
 
 
 
-  <link rel="canonical" href="https://mingliangliu.com/categories/汇编/">
+  <link rel="canonical" href="https://mingliangliu.com/2019/02/28/原码反码和补码/">
 
 
 
 
 
-  <title>分类: 汇编 | 清欢's Blog</title>
+  <title>原码反码和补码 | 清欢's Blog</title>
   
 
 
@@ -145,7 +147,7 @@
     
   
 
-  <div class="container sidebar-position-left ">
+  <div class="container sidebar-position-left page-post-detail">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
@@ -239,53 +241,190 @@
           <div id="content" class="content">
             
 
-  
-  
-  
-  <div class="post-block category">
+  <div id="posts" class="posts-expand">
+    
 
-    <div id="posts" class="posts-collapse">
-      <div class="collection-title">
-        <h1>汇编<small>分类</small>
-        </h1>
-      </div>
+  
 
-      
-        
+  
+  
+  
 
   <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-    <header class="post-header">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://mingliangliu.com/2019/02/28/原码反码和补码/">
 
-      <h2 class="post-title">
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="清欢">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="清欢's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
         
-            <a class="post-title-link" href="/2019/02/09/汇编转移指令/" itemprop="url">
-              
-                <span itemprop="name">汇编转移指令</span>
-              
-            </a>
         
-      </h2>
+          <h1 class="post-title" itemprop="name headline">原码反码和补码</h1>
+        
 
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2019-02-09T11:46:09+08:00" content="2019-02-09">
-          02-09
-        </time>
-      </div>
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-02-28T17:35:08+08:00">
+                2019-02-28
+              </time>
+            
 
-    </header>
-  </article>
+            
 
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/数字逻辑/" itemprop="url" rel="index">
+                    <span itemprop="name">数字逻辑</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="原码反码和补码"><a href="#原码反码和补码" class="headerlink" title="原码反码和补码"></a>原码反码和补码</h1><p>这里我们只讨论有符号数。我们都知道数在机器中都是以二进制表示的，而且常用二进制数的最高位表示其的正负，0为正，1为负</p>
+<h2 id="原码"><a href="#原码" class="headerlink" title="原码"></a>原码</h2><p>原码的表示法很简单，对于一个二进制数n,</p>
+<ul>
+<li>当n为正数时，n的原码是在n上增加一个符号位0</li>
+<li>当n为负数时，n的原码是在n上增加一个符号位1</li>
+<li>n为0时，在原码中，有两种表示0的方式：0.0000 1.0000</li>
+</ul>
+<h2 id="反码"><a href="#反码" class="headerlink" title="反码"></a>反码</h2><p>对于一个二进制数n</p>
+<ul>
+<li>当n为正数时，n的反码和原码相同</li>
+<li>当n为负数时，n的反码的符号位为1，数值部分是原码的数值部分按位取反</li>
+<li>在反码表示中，有两种不同形式的0：0.0000 1.1111</li>
+</ul>
+<h2 id="补码"><a href="#补码" class="headerlink" title="补码"></a>补码</h2><p>对于一个二进制数n</p>
+<ul>
+<li>当n为正数时，n的补码和n的原码相同</li>
+<li>当n为负数时，n的补码的符号为为1，数值部分是将原码数值按位取反加1</li>
+<li>当n为0时，在补码表示中，0的表示是唯一的：0.0000</li>
+</ul>
+<blockquote>
+<p>tip: 一个数补码的补码等于这个数</p>
+</blockquote>
 
       
     </div>
+    
+    
+    
 
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/数字逻辑/" rel="tag"># 数字逻辑</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/02/09/汇编转移指令/" rel="next" title="汇编转移指令">
+                <i class="fa fa-chevron-left"></i> 汇编转移指令
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
   </div>
   
   
   
+  </article>
 
-  
 
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
 
 
           </div>
@@ -293,6 +432,10 @@
 
 
           
+
+  
+
+
 
         </div>
         
@@ -313,8 +456,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
             
@@ -399,6 +551,22 @@
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#原码反码和补码"><span class="nav-number">1.</span> <span class="nav-text">原码反码和补码</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#原码"><span class="nav-number">1.1.</span> <span class="nav-text">原码</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#反码"><span class="nav-number">1.2.</span> <span class="nav-text">反码</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#补码"><span class="nav-number">1.3.</span> <span class="nav-text">补码</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
@@ -539,6 +707,10 @@
 
 
   
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
 
   
 
