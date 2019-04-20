@@ -81,18 +81,18 @@
 
 
 
-<meta name="description" content="转移指令在8086CPU中，转移指令可分为如下几类    无条件转移指令，如jmp 条件转移指令，如jcxz 循环指令，如loop 过程 中断  在此，只先讨论无条件转移中的jmp，其他东西以后再更 jmp为无条件转移指令，可以只修改IP，也可以同时修改CS和IP 依据位移进行转移的jmp指令所谓依据位移呢，就是根据转移指令到要转移的目的地址之间相差的字节数来进行转移的，相差的字节数由编译器进行计">
+<meta name="description" content="在8086CPU中，转移指令可分为如下几类    无条件转移指令，如jmp 条件转移指令，如jcxz 循环指令，如loop 过程 中断  在此，只先讨论无条件转移中的jmp，其他东西以后再更 jmp为无条件转移指令，可以只修改IP，也可以同时修改CS和IP 依据位移进行转移的jmp指令所谓依据位移呢，就是根据转移指令到要转移的目的地址之间相差的字节数来进行转移的，相差的字节数由编译器进行计算给出，">
 <meta name="keywords" content="汇编">
 <meta property="og:type" content="article">
 <meta property="og:title" content="汇编转移指令">
 <meta property="og:url" content="https://mingliangliu.com/2019/02/09/汇编转移指令/index.html">
 <meta property="og:site_name" content="清欢&#39;s Blog">
-<meta property="og:description" content="转移指令在8086CPU中，转移指令可分为如下几类    无条件转移指令，如jmp 条件转移指令，如jcxz 循环指令，如loop 过程 中断  在此，只先讨论无条件转移中的jmp，其他东西以后再更 jmp为无条件转移指令，可以只修改IP，也可以同时修改CS和IP 依据位移进行转移的jmp指令所谓依据位移呢，就是根据转移指令到要转移的目的地址之间相差的字节数来进行转移的，相差的字节数由编译器进行计">
+<meta property="og:description" content="在8086CPU中，转移指令可分为如下几类    无条件转移指令，如jmp 条件转移指令，如jcxz 循环指令，如loop 过程 中断  在此，只先讨论无条件转移中的jmp，其他东西以后再更 jmp为无条件转移指令，可以只修改IP，也可以同时修改CS和IP 依据位移进行转移的jmp指令所谓依据位移呢，就是根据转移指令到要转移的目的地址之间相差的字节数来进行转移的，相差的字节数由编译器进行计算给出，">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-02-10T17:03:03.576Z">
+<meta property="og:updated_time" content="2019-04-19T15:37:38.226Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="汇编转移指令">
-<meta name="twitter:description" content="转移指令在8086CPU中，转移指令可分为如下几类    无条件转移指令，如jmp 条件转移指令，如jcxz 循环指令，如loop 过程 中断  在此，只先讨论无条件转移中的jmp，其他东西以后再更 jmp为无条件转移指令，可以只修改IP，也可以同时修改CS和IP 依据位移进行转移的jmp指令所谓依据位移呢，就是根据转移指令到要转移的目的地址之间相差的字节数来进行转移的，相差的字节数由编译器进行计">
+<meta name="twitter:description" content="在8086CPU中，转移指令可分为如下几类    无条件转移指令，如jmp 条件转移指令，如jcxz 循环指令，如loop 过程 中断  在此，只先讨论无条件转移中的jmp，其他东西以后再更 jmp为无条件转移指令，可以只修改IP，也可以同时修改CS和IP 依据位移进行转移的jmp指令所谓依据位移呢，就是根据转移指令到要转移的目的地址之间相差的字节数来进行转移的，相差的字节数由编译器进行计算给出，">
 
 
 
@@ -344,7 +344,7 @@
       
 
       
-        <h1 id="转移指令"><a href="#转移指令" class="headerlink" title="转移指令"></a>转移指令</h1><p>在8086CPU中，转移指令可分为如下几类  </p>
+        <p>在8086CPU中，转移指令可分为如下几类  </p>
 <ul>
 <li>无条件转移指令，如jmp</li>
 <li>条件转移指令，如jcxz</li>
@@ -513,7 +513,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">5</span>
+                  <span class="site-state-item-count">6</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -535,7 +535,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">5</span>
+                  <span class="site-state-item-count">6</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
@@ -591,7 +591,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#转移指令"><span class="nav-number">1.</span> <span class="nav-text">转移指令</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#依据位移进行转移的jmp指令"><span class="nav-number">1.1.</span> <span class="nav-text">依据位移进行转移的jmp指令</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#jmp-short-标号"><span class="nav-number">1.1.1.</span> <span class="nav-text">jmp short 标号</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#jmp-near-ptr-标号"><span class="nav-number">1.1.2.</span> <span class="nav-text">jmp near ptr 标号</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#转移的目的地址在指令中的jmp指令"><span class="nav-number">1.2.</span> <span class="nav-text">转移的目的地址在指令中的jmp指令</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#jmp-far-ptr-标号"><span class="nav-number">1.2.1.</span> <span class="nav-text">jmp far ptr 标号</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#转移地址在寄存器中的jmp指令"><span class="nav-number">1.3.</span> <span class="nav-text">转移地址在寄存器中的jmp指令</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#jmp-16位reg"><span class="nav-number">1.3.1.</span> <span class="nav-text">jmp 16位reg</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#转移地址在内存中的jmp指令"><span class="nav-number">1.4.</span> <span class="nav-text">转移地址在内存中的jmp指令</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#jmp-word-ptr-内存单元地址（段内转移）"><span class="nav-number">1.4.1.</span> <span class="nav-text">jmp word ptr 内存单元地址（段内转移）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#jmp-dword-ptr-内存单元地址（段间转移）"><span class="nav-number">1.4.2.</span> <span class="nav-text">jmp dword ptr 内存单元地址（段间转移）</span></a></li></ol></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#依据位移进行转移的jmp指令"><span class="nav-number">1.</span> <span class="nav-text">依据位移进行转移的jmp指令</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#jmp-short-标号"><span class="nav-number">1.1.</span> <span class="nav-text">jmp short 标号</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#jmp-near-ptr-标号"><span class="nav-number">1.2.</span> <span class="nav-text">jmp near ptr 标号</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#转移的目的地址在指令中的jmp指令"><span class="nav-number">2.</span> <span class="nav-text">转移的目的地址在指令中的jmp指令</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#jmp-far-ptr-标号"><span class="nav-number">2.1.</span> <span class="nav-text">jmp far ptr 标号</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#转移地址在寄存器中的jmp指令"><span class="nav-number">3.</span> <span class="nav-text">转移地址在寄存器中的jmp指令</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#jmp-16位reg"><span class="nav-number">3.1.</span> <span class="nav-text">jmp 16位reg</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#转移地址在内存中的jmp指令"><span class="nav-number">4.</span> <span class="nav-text">转移地址在内存中的jmp指令</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#jmp-word-ptr-内存单元地址（段内转移）"><span class="nav-number">4.1.</span> <span class="nav-text">jmp word ptr 内存单元地址（段内转移）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#jmp-dword-ptr-内存单元地址（段间转移）"><span class="nav-number">4.2.</span> <span class="nav-text">jmp dword ptr 内存单元地址（段间转移）</span></a></li></ol></li></ol></div>
             
 
           </div>
