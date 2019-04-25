@@ -1,0 +1,836 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Hexo, NexT">
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="清欢's Blog" type="application/atom+xml">
+
+
+
+
+
+
+<meta name="description" content="前言本篇写于2019-4-25 这两天装Ubuntu18.04双系统简直装到崩溃。一是非常著名的开机卡死在Logo界面的问题，另一个是在装Nvidia驱动和CUDA的时候，更是费心。而网上的资料又良莠不齐，走了不少弯路。于是做个总结，方便以后的自己，也方便别人。 首先：我的机器是戴尔灵越5577，以下方案不一定适合您的机器，操作失败还请自行百度解决，并且安装所CUDA和cuDNN版本请务必参照官网">
+<meta property="og:type" content="article">
+<meta property="og:title" content="机器学习环境搭建">
+<meta property="og:url" content="https://mingliangliu.com/2019/04/24/机器学习环境搭建/index.html">
+<meta property="og:site_name" content="清欢&#39;s Blog">
+<meta property="og:description" content="前言本篇写于2019-4-25 这两天装Ubuntu18.04双系统简直装到崩溃。一是非常著名的开机卡死在Logo界面的问题，另一个是在装Nvidia驱动和CUDA的时候，更是费心。而网上的资料又良莠不齐，走了不少弯路。于是做个总结，方便以后的自己，也方便别人。 首先：我的机器是戴尔灵越5577，以下方案不一定适合您的机器，操作失败还请自行百度解决，并且安装所CUDA和cuDNN版本请务必参照官网">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://mingliangliu.com/images/rufus_en.png">
+<meta property="og:updated_time" content="2019-04-25T07:31:13.280Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="机器学习环境搭建">
+<meta name="twitter:description" content="前言本篇写于2019-4-25 这两天装Ubuntu18.04双系统简直装到崩溃。一是非常著名的开机卡死在Logo界面的问题，另一个是在装Nvidia驱动和CUDA的时候，更是费心。而网上的资料又良莠不齐，走了不少弯路。于是做个总结，方便以后的自己，也方便别人。 首先：我的机器是戴尔灵越5577，以下方案不一定适合您的机器，操作失败还请自行百度解决，并且安装所CUDA和cuDNN版本请务必参照官网">
+<meta name="twitter:image" content="https://mingliangliu.com/images/rufus_en.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://mingliangliu.com/2019/04/24/机器学习环境搭建/">
+
+
+
+
+
+  <title>机器学习环境搭建 | 清欢's Blog</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">清欢's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">一个杂乱的笔记本</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://mingliangliu.com/2019/04/24/机器学习环境搭建/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="清欢">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="清欢's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">机器学习环境搭建</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-04-24T23:12:07+08:00">
+                2019-04-24
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>本篇写于2019-4-25</p>
+<p>这两天装Ubuntu18.04双系统简直装到崩溃。一是非常著名的开机卡死在Logo界面的问题，另一个是在装Nvidia驱动和CUDA的时候，更是费心。而网上的资料又良莠不齐，走了不少弯路。于是做个总结，方便以后的自己，也方便别人。</p>
+<p>首先：我的机器是戴尔灵越5577，以下方案不一定适合您的机器，操作失败还请自行百度解决，并且安装所CUDA和cuDNN版本请务必参照<a href="https://tensorflow.google.cn/install/source" target="_blank" rel="noopener">官网配置</a></p>
+<p>另外：安装过程中并没有保留截图，以下也只有文字叙述，有时间会补上。</p>
+<h2 id="装机"><a href="#装机" class="headerlink" title="装机"></a>装机</h2><p>镜像是在Ububtu官网下载的镜像，这没有什么异议。启动盘制作方面我选择<a href="https://rufus.ie/" target="_blank" rel="noopener">rufus</a>，小巧免费好用，而且非常适合制作Linux启动盘。</p>
+<p>选好U盘选好镜像后就可以制作了，我是选的默认设置，如下图。我也试过gpt格式的，均可。</p>
+<img src="/images/rufus_en.png">
+<p>制作完成后，关闭rufus就可以了，带着U盘，重新启动。</p>
+<p>进入U盘引导（不同品牌的电脑有不同的方式，Dell是按F12选择启动方式），进入grub界面。</p>
+<p>你可能看过许多教程说的是，为防止开机开在Logo，选中Install Ubuntu，然后按e编辑。我的建议是先别这样做，因为编辑后进入的安装界面屏幕分辨率会很低，许多按钮在屏幕下方根本点不到，安装很不方便。这里我直接回车开始安装，至于会卡在logo这个问题，装好后再弄。</p>
+<p>然后一步步安装就可以了。装的时候一定要注意：<strong>不要联网</strong>、<strong>不要选安装驱动啥的，最小化安装即可</strong>、<strong>手动分区</strong>。我的分区方式如下，共分给Linux 100G</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">目录</th>
+<th style="text-align:center">大小</th>
+<th style="text-align:center"></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">/</td>
+<td style="text-align:center">20G</td>
+<td style="text-align:center">逻辑分区</td>
+</tr>
+<tr>
+<td style="text-align:center">/boot</td>
+<td style="text-align:center">1G</td>
+<td style="text-align:center">逻辑分区</td>
+</tr>
+<tr>
+<td style="text-align:center">/home</td>
+<td style="text-align:center">69G</td>
+<td style="text-align:center">逻辑分区</td>
+</tr>
+</tbody>
+</table>
+<p>装完后，会显示重新启动，如果点立即重启的话，不出意外，会卡在这里，没关系，按住电源键不放，强制关机。再开机后就可看到系统选择界面了。</p>
+<p>这个时候不要着急选择，先选中Ubuntu，按e键进入编辑，将倒数第二段最后（可能是倒数第三行，不难分辨）的<code>quiet splash</code> 后加上<code>nomodeset</code>，注意<code>nomodeset</code>要和前后有一个空格。然后按F10，即可开机。</p>
+<p>这时候，应该可以进入系统了，这个时候开始安装显卡驱动。</p>
+<h2 id="安装驱动"><a href="#安装驱动" class="headerlink" title="安装驱动"></a>安装驱动</h2><p>这里有很多教程说是通过<code>sudo ubuntu-drivers autoinstall</code>这个方法安装的，但是就我亲身经历而言，并不好使，这里安装驱动是没问题的，但是后来在安装CUDA的时候会遇到各种各样的问题。</p>
+<p>这里的建议是，去Nvidia的官网选择一个适合你的显卡的驱动（我选的最新的），下载好备用。</p>
+<p>在装驱动之前，先将nouveau加入黑名单：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo vim /etc/modprobe.d/blacklist.conf</span><br></pre></td></tr></table></figure>
+<p>在末尾加上一行<code>blacklist nouveau</code></p>
+<p>保存退出，执行<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo update-initramfs -u</span><br></pre></td></tr></table></figure></p>
+<p>另外：由于折腾的次数比较多我还改了<code>/etc/default/grub</code>，不知道和这有没有关系：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo gedit /etc/default/grub</span><br></pre></td></tr></table></figure>
+<p>然后将<code>quiet splash</code>后面加上<code>acpi_osi=linux</code></p>
+<p>保存退出，执行</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo update-grub</span><br></pre></td></tr></table></figure>
+<p>接下来按CTRL+ALT+F2，进入纯字符界面，以root身份登入，开始安装显卡驱动。首先进入刚才下好的驱动所在的目录，执行</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo sh ./NVIDIA-Linux-x86_64-xxx.xx.run –no-opengl-files  <span class="comment"># 一定不要忘记后面的参数</span></span><br></pre></td></tr></table></figure>
+<p>然后一路确定，完成后重启系统，进入BIOS（戴尔是按F2，其他电脑型号请自行查找资料），<strong>关掉secure boot，设置为disable</strong>，关掉后保存重启。这里<strong>一定要关掉</strong>，不然开机后是没法用刚才装的Nvidia驱动的。</p>
+<p>启动后在控制台输入<code>nvidia-smi</code>，若没有报错则证明安装成功。</p>
+<h2 id="安装CUDA"><a href="#安装CUDA" class="headerlink" title="安装CUDA"></a>安装CUDA</h2><p>接下来，我们安装CUDA，我这里使用的是CUDA10.0，因为目前tensorflow已经可以使用CUDA10了，也就不挑旧版本安装了。</p>
+<p>到Nvidai官网上找到CUDA10.0的下载链接，Nvidia给出的默认的CUDA的下载链接是CUDA10.1，因为我没试验过，所以不知道可不可以用，你可以自行决定。</p>
+<p>依次选择 Linux -&gt; x86_64 -&gt; Ubuntu -&gt; 18.04 -&gt; runfile(local)，选好后选择Base Install开始下载。</p>
+<p>下好后，找到CUDA安装包所在的位置，在控制台输入</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo sh ./cuda_10.0.130_410.48_linux.run</span><br></pre></td></tr></table></figure>
+<p>然后等待一会后，会出来安装协议，按住空格键快速看完。然后选择安装选项：</p>
+<ul>
+<li>第一项，选择accept接受。</li>
+<li>第二项，询问你是否安装CUDA中带的显卡驱动，由于我们前面已经安装了驱动，所以不安装，选n</li>
+<li>剩下的，能选y的选y，能Enter的Enter就好。</li>
+</ul>
+<p>装好后，在~/.bashrc最后 添加环境变量，保存后退出</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">export</span> LD_LIBRARY_PATH=<span class="variable">$LD_LIBRARY_PATH</span>:/usr/<span class="built_in">local</span>/cuda-10.0/lib64</span><br><span class="line"><span class="built_in">export</span> PATH=<span class="variable">$PATH</span>:/usr/<span class="built_in">local</span>/cuda-10.0/bin</span><br><span class="line"><span class="built_in">export</span> CUDA_HOME=<span class="variable">$CUDA_HOME</span>:/usr/<span class="built_in">local</span>/cuda-10.0</span><br></pre></td></tr></table></figure>
+<p>测试一下：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> /usr/<span class="built_in">local</span>/cuda/samples/1_Utilities/deviceQuery </span><br><span class="line">sudo make</span><br><span class="line">./deviceQuery</span><br></pre></td></tr></table></figure>
+<p>若最后一行的结果为<code>Result = PASS</code>，说明安装成功。</p>
+<h2 id="安装cuDNN"><a href="#安装cuDNN" class="headerlink" title="安装cuDNN"></a>安装cuDNN</h2><p>最后，去官网找对应版本的cuDNN，这里我选择的是7.5（7.4也是可以的），下载（这里需要登陆Nvidia才可以）</p>
+<p>将下载好的压缩包解压，一般解压出来的目录为cuda，拷贝到CUDA中</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo cp cuda/include/cudnn.h /usr/<span class="built_in">local</span>/cuda/include/ </span><br><span class="line">sudo cp cuda/lib64/libcudnn* /usr/<span class="built_in">local</span>/cuda/lib64/</span><br></pre></td></tr></table></figure>
+<h2 id="最后"><a href="#最后" class="headerlink" title="最后"></a>最后</h2><p>至此，CUDA已安装完成，装个gpu版本的tensorflow试试（你也可以先使用virtualenv创建个虚拟环境再安装）</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pip3 install tensorflow-gpu  <span class="comment"># 这里pip3需要手动下载</span></span><br></pre></td></tr></table></figure>
+<p>装好后，进入python交互环境，试试<code>Hello World</code></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="keyword">import</span> tensorflow <span class="keyword">as</span> tf</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>hello = tf.constant(<span class="string">'Hello World'</span>)</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>sess = tf.Session()</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>sess.run(hello)</span><br><span class="line"><span class="string">b'Hello World'</span></span><br></pre></td></tr></table></figure>
+<p>执行后，会有日志打印，若没有报错，即证明安装成功。</p>
+<hr>
+<p>参考：</p>
+<ul>
+<li><a href="https://blog.csdn.net/qq_32408773/article/details/84111244" target="_blank" rel="noopener">https://blog.csdn.net/qq_32408773/article/details/84111244</a></li>
+<li><a href="https://blog.csdn.net/u010801439/article/details/80483036" target="_blank" rel="noopener">https://blog.csdn.net/u010801439/article/details/80483036</a></li>
+<li><a href="https://www.jianshu.com/p/6f54b4f96556" target="_blank" rel="noopener">https://www.jianshu.com/p/6f54b4f96556</a></li>
+</ul>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/04/19/Flask源码浅析/" rel="next" title="Flask源码浅析">
+                <i class="fa fa-chevron-left"></i> Flask源码浅析
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/images/avatar.jpg" alt="清欢">
+            
+              <p class="site-author-name" itemprop="name">清欢</p>
+              <p class="site-description motion-element" itemprop="description">一个杂乱的笔记本</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">7</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">4</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">6</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/Varpc" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://www.zhihu.com/people/shi-jian-zhu-yu-80/activities" target="_blank" title="知乎">
+                      
+                        <i class="fa fa-fw fa-globe"></i>知乎</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#装机"><span class="nav-number">2.</span> <span class="nav-text">装机</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#安装驱动"><span class="nav-number">3.</span> <span class="nav-text">安装驱动</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#安装CUDA"><span class="nav-number">4.</span> <span class="nav-text">安装CUDA</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#安装cuDNN"><span class="nav-number">5.</span> <span class="nav-text">安装cuDNN</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#最后"><span class="nav-number">6.</span> <span class="nav-text">最后</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">清欢</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Gemini</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+  
+
+  
+
+</body>
+</html>
