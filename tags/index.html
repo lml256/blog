@@ -299,7 +299,7 @@
             </div>
             <div class="tag-cloud-tags">
               
-                <a href="/tags/Flask/" style="font-size: 12px; color: #ccc">Flask</a> <a href="/tags/Linux/" style="font-size: 12px; color: #ccc">Linux</a> <a href="/tags/Python/" style="font-size: 30px; color: #111">Python</a> <a href="/tags/Web/" style="font-size: 30px; color: #111">Web</a> <a href="/tags/信息安全/" style="font-size: 12px; color: #ccc">信息安全</a> <a href="/tags/数字逻辑/" style="font-size: 12px; color: #ccc">数字逻辑</a> <a href="/tags/机器学习/" style="font-size: 12px; color: #ccc">机器学习</a> <a href="/tags/汇编/" style="font-size: 12px; color: #ccc">汇编</a> <a href="/tags/汇编语言/" style="font-size: 12px; color: #ccc">汇编语言</a>
+                <a href="/tags/Flask/" style="font-size: 12px; color: #ccc">Flask</a> <a href="/tags/Linux/" style="font-size: 12px; color: #ccc">Linux</a> <a href="/tags/Python/" style="font-size: 30px; color: #111">Python</a> <a href="/tags/Web/" style="font-size: 30px; color: #111">Web</a> <a href="/tags/信息安全/" style="font-size: 12px; color: #ccc">信息安全</a> <a href="/tags/数字逻辑/" style="font-size: 12px; color: #ccc">数字逻辑</a> <a href="/tags/机器学习/" style="font-size: 12px; color: #ccc">机器学习</a> <a href="/tags/汇编/" style="font-size: 21px; color: #6f6f6f">汇编</a> <a href="/tags/汇编语言/" style="font-size: 12px; color: #ccc">汇编语言</a>
               
             </div>
           </div>
@@ -350,7 +350,7 @@
         
           <a href="/archives/">
         
-          <span class="site-state-item-count">8</span>
+          <span class="site-state-item-count">9</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -541,6 +541,53 @@
 
 
 
+  
+
+  
+    
+      <script type="text/x-mathjax-config">
+
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$', '$'], ['\\(', '\\)'] ],
+      processEscapes: true,
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    },
+    TeX: {
+      equationNumbers: {
+        autoNumber: 'AMS'
+      }
+    }
+  });
+
+  MathJax.Hub.Register.StartupHook('TeX Jax Ready', function() {
+    MathJax.InputJax.TeX.prefilterHooks.Add(function(data) {
+      if (data.display) {
+        var next = data.script.nextSibling;
+        while (next && next.nodeName.toLowerCase() === '#text') {
+          next = next.nextSibling;
+        }
+        if (next && next.nodeName.toLowerCase() === 'br') {
+          next.parentNode.removeChild(next);
+        }
+      }
+    });
+  });
+
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for (i = 0; i < all.length; i += 1) {
+      element = document.getElementById(all[i].inputID + '-Frame').parentNode;
+      if (element.nodeName.toLowerCase() == 'li') {
+        element = element.parentNode;
+      }
+      element.classList.add('has-jax');
+    }
+  });
+</script>
+<script src="//cdn.jsdelivr.net/npm/mathjax@2/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+    
   
 
   
