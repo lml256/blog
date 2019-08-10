@@ -58,20 +58,20 @@
   <meta name="description" content="在IA32的操作系统中，段被分为了4个特权级，分别为0-3级，有时候我们也叫做ring0-ring3，其中，数值越小特权级越高。如下图所示：  图中，核心代码和数据所在的段的特权级都比较高，一般在ring0，而用户程序所在的段的特权级较低，一般在ring3。当低特权级的任务试图在未被允许的情况下访问高特权级的段时，将会产生常规保护错误。 而处理器是如何区分所在段的特权级，进而对其进行保护的呢？这就">
 <meta name="keywords" content="汇编,保护模式">
 <meta property="og:type" content="article">
-<meta property="og:title" content="保护模式特权级级概述">
-<meta property="og:url" content="https://mingliangliu.com/2019/08/10/保护模式特权级级概述/index.html">
+<meta property="og:title" content="保护模式特权级概述">
+<meta property="og:url" content="https://mingliangliu.com/2019/08/10/保护模式特权级概述/index.html">
 <meta property="og:site_name" content="清欢&#39;s Blog">
 <meta property="og:description" content="在IA32的操作系统中，段被分为了4个特权级，分别为0-3级，有时候我们也叫做ring0-ring3，其中，数值越小特权级越高。如下图所示：  图中，核心代码和数据所在的段的特权级都比较高，一般在ring0，而用户程序所在的段的特权级较低，一般在ring3。当低特权级的任务试图在未被允许的情况下访问高特权级的段时，将会产生常规保护错误。 而处理器是如何区分所在段的特权级，进而对其进行保护的呢？这就">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="https://mingliangliu.com/images/%E4%BF%9D%E6%8A%A4%E6%A8%A1%E5%BC%8F%E7%89%B9%E6%9D%83%E7%BA%A7%E6%A6%82%E8%BF%B01.jpg">
 <meta property="og:image" content="https://mingliangliu.com/images/%E4%BF%9D%E6%8A%A4%E6%A8%A1%E5%BC%8F%E7%89%B9%E6%9D%83%E7%BA%A7%E6%A6%82%E8%BF%B02.jpg">
-<meta property="og:updated_time" content="2019-08-10T10:12:40.727Z">
+<meta property="og:updated_time" content="2019-08-10T10:27:04.095Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="保护模式特权级级概述">
+<meta name="twitter:title" content="保护模式特权级概述">
 <meta name="twitter:description" content="在IA32的操作系统中，段被分为了4个特权级，分别为0-3级，有时候我们也叫做ring0-ring3，其中，数值越小特权级越高。如下图所示：  图中，核心代码和数据所在的段的特权级都比较高，一般在ring0，而用户程序所在的段的特权级较低，一般在ring3。当低特权级的任务试图在未被允许的情况下访问高特权级的段时，将会产生常规保护错误。 而处理器是如何区分所在段的特权级，进而对其进行保护的呢？这就">
 <meta name="twitter:image" content="https://mingliangliu.com/images/%E4%BF%9D%E6%8A%A4%E6%A8%A1%E5%BC%8F%E7%89%B9%E6%9D%83%E7%BA%A7%E6%A6%82%E8%BF%B01.jpg">
   <link rel="alternate" href="/atom.xml" title="清欢's Blog" type="application/atom+xml">
-  <link rel="canonical" href="https://mingliangliu.com/2019/08/10/保护模式特权级级概述/">
+  <link rel="canonical" href="https://mingliangliu.com/2019/08/10/保护模式特权级概述/">
 
 
 <script id="page-configurations">
@@ -85,7 +85,7 @@
   };
 </script>
 
-  <title>保护模式特权级级概述 | 清欢's Blog</title>
+  <title>保护模式特权级概述 | 清欢's Blog</title>
   
 
 
@@ -226,7 +226,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://mingliangliu.com/2019/08/10/保护模式特权级级概述/">
+    <link itemprop="mainEntityOfPage" href="https://mingliangliu.com/2019/08/10/保护模式特权级概述/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="清欢">
@@ -240,7 +240,7 @@
       <header class="post-header">
 
         
-          <h2 class="post-title" itemprop="name headline">保护模式特权级级概述
+          <h2 class="post-title" itemprop="name headline">保护模式特权级概述
 
               
             
@@ -260,7 +260,7 @@
                 
               
 
-              <time title="创建时间：2019-08-10 15:04:53 / 修改时间：18:12:40" itemprop="dateCreated datePublished" datetime="2019-08-10T15:04:53+08:00">2019-08-10</time>
+              <time title="创建时间：2019-08-10 15:04:53 / 修改时间：18:27:04" itemprop="dateCreated datePublished" datetime="2019-08-10T15:04:53+08:00">2019-08-10</time>
             </span>
           
             

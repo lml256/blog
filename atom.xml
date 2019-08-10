@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://mingliangliu.com/"/>
-  <updated>2019-08-10T10:12:40.727Z</updated>
+  <updated>2019-08-10T10:27:04.095Z</updated>
   <id>https://mingliangliu.com/</id>
   
   <author>
@@ -17,11 +17,11 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
-    <title>保护模式特权级级概述</title>
-    <link href="https://mingliangliu.com/2019/08/10/%E4%BF%9D%E6%8A%A4%E6%A8%A1%E5%BC%8F%E7%89%B9%E6%9D%83%E7%BA%A7%E7%BA%A7%E6%A6%82%E8%BF%B0/"/>
-    <id>https://mingliangliu.com/2019/08/10/保护模式特权级级概述/</id>
+    <title>保护模式特权级概述</title>
+    <link href="https://mingliangliu.com/2019/08/10/%E4%BF%9D%E6%8A%A4%E6%A8%A1%E5%BC%8F%E7%89%B9%E6%9D%83%E7%BA%A7%E6%A6%82%E8%BF%B0/"/>
+    <id>https://mingliangliu.com/2019/08/10/保护模式特权级概述/</id>
     <published>2019-08-10T07:04:53.000Z</published>
-    <updated>2019-08-10T10:12:40.727Z</updated>
+    <updated>2019-08-10T10:27:04.095Z</updated>
     
     <content type="html"><![CDATA[<p>在IA32的操作系统中，段被分为了4个特权级，分别为0-3级，有时候我们也叫做ring0-ring3，其中，数值越小特权级越高。如下图所示：</p><p><img src="/images/%E4%BF%9D%E6%8A%A4%E6%A8%A1%E5%BC%8F%E7%89%B9%E6%9D%83%E7%BA%A7%E6%A6%82%E8%BF%B01.jpg" alt></p><p>图中，核心代码和数据所在的段的特权级都比较高，一般在ring0，而用户程序所在的段的特权级较低，一般在ring3。当低特权级的任务试图在未被允许的情况下访问高特权级的段时，将会产生常规保护错误。</p><p>而处理器是如何区分所在段的特权级，进而对其进行保护的呢？这就不得不提到CPL、DPL和RPL三者了。但是在开始之前，我们需要先了解一下一致代码段和非一致代码段。</p><h2 id="一致代码段和非一致代码段"><a href="#一致代码段和非一致代码段" class="headerlink" title="一致代码段和非一致代码段"></a>一致代码段和非一致代码段</h2><p>在操作系统中，我们有些高特权级的代码是希望被低特权级的程序所访问的，比如一些库函数，于是我们将这些高特权级代码放在一个叫做一致代码段的段里。而有些高特权级的代码，我们并不想让低特权级的程序所访问，于是我们把他们放在一个叫做非一致代码段的段里。具体来说，当通过call或者jmp指令转移到其它段时（即访问其他段），当转移的目标是一个优先级更高的一致代码段时，我们是可以进行访问的，但是当前的特权级会被延续下去；当转移的目标是一个优先级更高的非一致代码段时，这时的访问会引起常规保护错误（除非使用调用门或任务门）。</p><p>总结来说：</p><ul><li><p>一致代码段：由系统（高特权级）共享给低特权级的程序的代码所在的段，主要有下面两点限制：</p><ol><li>高特权级程序不能访问低特权级的数据</li><li>低特权级的程序可以访问高特权级的代码，但是<strong>特权级不会改变</strong>，还是保持低特权级程序的特权级</li></ol></li><li><p>非一致代码段：为了避免被低特权级程序所访问而保护起来的代码段，主要有一点限制：</p><ol><li>只允许同级之间访问</li></ol></li><li><p>另外，数据段都是非一致的 </p></li></ul><p>所遵循的规则如下图所示：</p><p><img src="/images/%E4%BF%9D%E6%8A%A4%E6%A8%A1%E5%BC%8F%E7%89%B9%E6%9D%83%E7%BA%A7%E6%A6%82%E8%BF%B02.jpg" alt></p><h2 id="CPL"><a href="#CPL" class="headerlink" title="CPL"></a>CPL</h2><p>CPL全称Current Privilege Level，顾名思义，CPL代表的是当前执行的任务和程序的特权级。它存储在cs和ss的第0位和第1位上。<strong>一般情况下</strong>，CPL等于代码所在段的特权级，当程序转移到不同的代码段时，处理器将改变CPL的值。</p><p>但是当访问一致代码段时，并不会改变CPL，正如一致代码段中所说，一致代码段可以被低特权级的程序所访问，但是并不会改变特权级，所以也就不会改变CPL，这就是与上面加粗的“一般情况”相对的“非一般情况”。</p><h2 id="DPL"><a href="#DPL" class="headerlink" title="DPL"></a>DPL</h2><p>DPL全程为Descriptor Privilege Level，它代表段或者门的特权级。他被存储在段描述符或者门描述符属性中的DPL字段上。</p><p>当当前的代码段试图访问一个段或者门时，DPL将会和CPL以及段或者门选择子的RPL相比较，而对于段或者门类型的不同，比较规则也不同，具体如下：</p><ul><li>数据段：如果访问的是一个数据段，DPL代表访问此段的最低特权级，即只有CPL &lt;= DPL（数值上），才有权限访问。</li><li>非一致代码段（不使用调用门）：DPL代表访问此段的特权级。即只有DPL = RPL，才有权限访问。</li><li>调用门：DPL规定了当前执行的任务和程序可以访问此调用门的最低特权级，即要CPL &lt;= DPL</li><li>一致代码段和非一致代码段（使用调用门访问）：DPL规定了访问此段的最高特权级。即只有CPL &gt;= DPL，才有权限访问。</li><li>TSS：DPL规定了访问此TSS的最低特权级。</li></ul><p>总结一下就是：</p><ul><li>在 数据段、调用门、TSS中，DPL代表最低特权级，访问要求：CPL &lt;= DPL</li><li>在 不使用调用门访问的非一直代码段时，访问要求： CPL = DPL</li><li>在 一致代码段和使用调用门访问的非一致代码段中，DPL 代表最高特权级，访问要求：CPL &gt;= DPL</li></ul><h2 id="RPL"><a href="#RPL" class="headerlink" title="RPL"></a>RPL</h2><p>RPL全称是Requested Privilege Level。RPL保存在段选择子的第0位和第1位上。我们在上文说了当一个段访问另一个段时，CPL与DPL的比较规则，但是仅仅比较CPL和DPL是不够的，处理器还要通过检查RPL来确定能否访问另一个段。</p><p>操作系统往往用RPL来避免低特权级应用程序访问高特权级段内的数据，即便提出访问请求的段有足够的特权级，如果RPL不够也是不行的，当RPL的值比CPL大的时候，RPL将起决定性作用。也就是说，只有当CPL和RPL都小于要访问的数据段的DPL时，才有权限访问该数据段。关于为什么引入RPL的讨论还是比较复杂的，此处不再深入探讨。</p><hr><p>完</p><p>参考：</p><ul><li>《一个操作系统的实现》 于渊</li></ul>]]></content>
     
