@@ -220,6 +220,117 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://mingliangliu.com/2019/08/10/保护模式特权级级概述/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="清欢">
+      <meta itemprop="description" content="一个杂乱的笔记本">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="清欢's Blog">
+    </span>
+      <header class="post-header">
+
+        
+          <h2 class="post-title" itemprop="name headline">
+                
+                
+                <a href="/2019/08/10/保护模式特权级级概述/" class="post-title-link" itemprop="url">保护模式特权级级概述</a>
+              
+            
+          </h2>
+        
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2019-08-10 15:04:53 / 修改时间：18:12:40" itemprop="dateCreated datePublished" datetime="2019-08-10T15:04:53+08:00">2019-08-10</time>
+            </span>
+          
+            
+
+            
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/汇编/" itemprop="url" rel="index"><span itemprop="name">汇编</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          <br>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          
+            <p>
+              在IA32的操作系统中，段被分为了4个特权级，分别为0-3级，有时候我们也叫做ring0-ring3，其中，数值越小特权级越高。如下图所示：
+
+图中，核心代码和数据所在的段的特权级都比较高，一般在ring0，而用户程序所在的段的特权级较低，一般在ring3。当低特权级的任务试图在未被允许的情况下访问
+              ...
+            </p>
+          <!--noindex-->
+          
+            <div class="post-button text-center">
+              <a class="btn" href="/2019/08/10/保护模式特权级级概述/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+    
+      
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://mingliangliu.com/2019/08/04/保护模式下的寻址/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -269,7 +380,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2019-08-05 00:31:45" itemprop="dateModified" datetime="2019-08-05T00:31:45+08:00">2019-08-05</time>
+                <time title="修改时间：2019-08-10 15:03:22" itemprop="dateModified" datetime="2019-08-10T15:03:22+08:00">2019-08-10</time>
               </span>
             
           
@@ -1356,7 +1467,7 @@ jmp为无条件转移指令，可以只修改IP，也可以同时修改CS和IP
         
           <a href="/archives/">
         
-          <span class="site-state-item-count">9</span>
+          <span class="site-state-item-count">10</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -1416,7 +1527,9 @@ jmp为无条件转移指令，可以只修改IP，也可以同时修改CS和IP
         
           
         
-        <span class="site-state-item-count">9</span>
+          
+        
+        <span class="site-state-item-count">10</span>
         <span class="site-state-item-name">标签</span>
         </a>
       </div>
