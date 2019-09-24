@@ -67,7 +67,7 @@
 <meta property="og:image" content="https://mingliangliu.com/images/运行时栈的字节对齐2.png">
 <meta property="og:image" content="https://mingliangliu.com/images/运行时栈的字节对齐3.png">
 <meta property="og:image" content="https://mingliangliu.com/images/运行时栈的字节对齐4.png">
-<meta property="og:updated_time" content="2019-08-11T05:06:57.537Z">
+<meta property="og:updated_time" content="2019-09-24T15:09:27.182Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="x86_64 Linux 运行时栈的字节对齐">
 <meta name="twitter:description" content="前言C语言的过程调用机制（即函数之间的调用）的一个关键特性（起始大多数编程语言也是如此）都是使用了栈数据结构提供的后进先出的内存管理原则。每一个函数的栈空间被称为栈帧，一个栈帧上包含了保存的寄存器、分配给局部变量的空间以及传递给要调用函数的参数等等。一个基本的栈结构如下图所示：    但是，有一点需要引起注意的是，过程调用的参数是通过栈来传递的，并且分配的局部变量也在栈上，那么对于不同字节长度的参">
@@ -262,11 +262,21 @@
                 
               
 
-              <time title="创建时间：2019-08-11 00:02:09 / 修改时间：13:06:57" itemprop="dateCreated datePublished" datetime="2019-08-11T00:02:09+08:00">2019-08-11</time>
+              <time title="创建时间：2019-08-11 00:02:09" itemprop="dateCreated datePublished" datetime="2019-08-11T00:02:09+08:00">2019-08-11</time>
             </span>
           
             
 
+            
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2019-09-24 23:09:27" itemprop="dateModified" datetime="2019-09-24T23:09:27+08:00">2019-09-24</time>
+              </span>
             
           
             <span class="post-meta-item">
@@ -306,7 +316,7 @@
 <li>Ubuntu x86_64 GNU/Linux</li>
 <li>gcc 7.4.0</li>
 </ul>
-<h2 id="数据对齐"><a href="#数据对齐" class="headerlink" title="数据对齐"></a>数据对齐</h2><p>许多计算机系统对基本数据类型的合法地址做了一些限制，要求某种类型对象的地址必须是某个值K的倍数，其中K具体如下图。这种对齐限制简化了形成处理器和内存系统之间接口的硬件设计。举个实际的例子：不如我们在内存中读取一个8字节长度的变量，那么这个变量所在的地址必须是8的倍数。如果这个变量所在的地址是8的倍数，那么就可以通过一次内存操作完成该变量的读取。倘若这个变量所在的地址并不是8的倍数，那么可能就需要执行两次内存读取，因为该变量被放在两个8字节的内存块中了。</p>
+<h2 id="数据对齐"><a href="#数据对齐" class="headerlink" title="数据对齐"></a>数据对齐</h2><p>许多计算机系统对基本数据类型的合法地址做了一些限制，要求某种类型对象的地址必须是某个值K的倍数，其中K具体如下图。这种对齐限制简化了形成处理器和内存系统之间接口的硬件设计。举个实际的例子：比如我们在内存中读取一个8字节长度的变量，那么这个变量所在的地址必须是8的倍数。如果这个变量所在的地址是8的倍数，那么就可以通过一次内存操作完成该变量的读取。倘若这个变量所在的地址并不是8的倍数，那么可能就需要执行两次内存读取，因为该变量被放在两个8字节的内存块中了。</p>
 <table>
 <thead>
 <tr>
@@ -332,7 +342,7 @@
 </tr>
 </tbody></table>
 <p>无论数据是否对齐，x86_64硬件都能正常工作，但是却会降低系统的性能，所以我们的编译器在编译时一般会为我们实施数据对齐。</p>
-<h2 id="栈的字节对齐"><a href="#栈的字节对齐" class="headerlink" title="栈的字节对齐"></a>栈的字节对齐</h2><p>栈的字节对齐，实际是指栈顶指针必须须是16字节的整数倍。我们都知道栈对齐帮助在尽可能少的内存访问周期内读取数据，不对齐堆栈指针可能导致严重的性能下降。</p>
+<h2 id="栈的字节对齐"><a href="#栈的字节对齐" class="headerlink" title="栈的字节对齐"></a>栈的字节对齐</h2><p>栈的字节对齐，实际是指栈顶指针必须须是16字节的整数倍。栈对齐帮助在尽可能少的内存访问周期内读取数据，不对齐堆栈指针可能导致严重的性能下降。</p>
 <p>上文我们说，即使数据没有对齐，我们的程序也是可以执行的，只是效率有点低而已，但是某些型号的Intel和AMD处理器对于有些实现多媒体操作的SSE指令，如果数据没有对齐的话，就无法正确执行。这些指令对16字节内存进行操作，在SSE单元和内存之间传送数据的指令要求内存地址必须是16的倍数。</p>
 <p>因此，任何针对x86_64处理器的编译器和运行时系统都必须保证分配用来保存可能会被SSE寄存器读或写的数据结构的内存，都必须是16字节对齐的，这就形成了一种标准：</p>
 <ul>
