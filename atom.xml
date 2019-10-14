@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://mingliangliu.com/"/>
-  <updated>2019-10-09T14:34:24.751Z</updated>
+  <updated>2019-10-14T15:50:45.986Z</updated>
   <id>https://mingliangliu.com/</id>
   
   <author>
@@ -15,6 +15,32 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>make工具简介</title>
+    <link href="https://mingliangliu.com/2019/10/14/make%E5%B7%A5%E5%85%B7%E7%AE%80%E4%BB%8B/"/>
+    <id>https://mingliangliu.com/2019/10/14/make工具简介/</id>
+    <published>2019-10-14T13:58:35.000Z</published>
+    <updated>2019-10-14T15:50:45.986Z</updated>
+    
+    <content type="html"><![CDATA[<p>在Linux C/C++的开发过程中，当源代码文件较少时，我们可以手动使用gcc或g++进行编译链接，但是当源代码文件较多且依赖变得复杂时，我们就需要一种简单好用的工具来帮助我们管理。于是，make应运而生。</p><p>make主要用来管理C/C++项目，通过Makefile书写的规则来对项目中的源代码文件进行编译，生成可执行的程序。</p><h2 id="make流程"><a href="#make流程" class="headerlink" title="make流程"></a>make流程</h2><p>make执行的主要过程如下：当在shell中使用make命令时，make会寻找当前目录下的Makefile文件，根据该文件中的规则来确定依赖关系，如果一个文件所依赖的文件比这个文件要新，或者说修改时间更晚，那么make会根据Makefile中指明的命令来重新编译生成该文件。</p><p>另外，make除了自动寻找定义了编译规则的Makefile文件外，还可以手动指明定义了规则的文件。比如：</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ make -f rule.txt  # rule.txt中为make规则</span><br></pre></td></tr></table></figure><h2 id="Makefile的写法"><a href="#Makefile的写法" class="headerlink" title="Makefile的写法"></a>Makefile的写法</h2><h3 id="规则"><a href="#规则" class="headerlink" title="规则"></a>规则</h3><p>Makefile由一系列的规则构成，一条规则的基本格式如下：</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">目标 : 条件 </span><br><span class="line">[tab]  命令</span><br></pre></td></tr></table></figure><p>其中，需要在命令之前加一个Tab制表符，并且条件和命令都是可以省略的，但是只能省略其一，条件省略时一般做一些编译以外的其他工作，当命令省略时其实也可以对目标进行编译生成，这涉及到了Makefile中的隐式规则，这里不过多赘述，我们只讨论显式规则。</p><p>如make流程所述，当条件中的文件比目标要新时，会执行tab后的命令。</p><p>Makefile中有很多规则时，当在shell中执行<code>make</code>命令，默认会将第一条规则的目标作为最终生成的目标。</p><p>比如下面这个Makefile例子：</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">main: main.o sub.o</span><br><span class="line">gcc -o main main.o sub.o</span><br><span class="line"></span><br><span class="line">sub.o: sub.c sub.h</span><br><span class="line">gcc -c -o sub.o sub.c</span><br><span class="line"></span><br><span class="line">main.o: main.c sub.h</span><br><span class="line">gcc -c -o main.o main.c</span><br><span class="line"></span><br><span class="line">clean:</span><br><span class="line">rm sub.o main.o</span><br><span class="line"></span><br><span class="line">.PHONY: clean</span><br></pre></td></tr></table></figure><p>当我们在shell中执行make时，会最终生成<code>main</code>这个最终目标。</p><p>但是如果我们只想生成某个中间的目标也是可以的，比如只生成<code>sub.o</code>，只需要采用<code>make 最终目标</code>的形式就可以了，即<code>make sub.o</code></p><p>注意到示例中省略了条件的那条规则（目标为clean的那条规则），正规上把它叫做伪目标，用来执行一些其他的任务，如本例中清除编译中生成的.o文件。当然，伪目标下的命令可以是多种多样的，比如将<code>clean</code>下的命令改为<code>ls</code>，当执行<code>make clean</code>时，会列出当前目录下的所有文件。但是有一点需要注意的是，如果我们的目录下已经有了一个叫做clean的文件，当我们执行<code>make clean</code>时，make就分不清这个clean到底是那个了，为了避免这种情况，需要用<code>.PHONY: 伪目标1，伪目标2..</code>的方式来显式的声明伪目标。</p><h3 id="变量"><a href="#变量" class="headerlink" title="变量"></a>变量</h3><p>当我们Makefile中的规则变得非常多时，为了方便，也为了可维护性，我们一般使用变量来代替某些信息。</p><p>Makefile中定义变量的格式如下：</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">变量名 := 变量值</span><br></pre></td></tr></table></figure><p>其中<code>:=</code>也该以使用<code>=</code>，依个人喜好。用<code>$(变量名)</code>的形式来使用变量。</p><p>先前示例中便可精简如下：</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">CC := gcc</span><br><span class="line">LD := gcc</span><br><span class="line">CFLAGS := -c</span><br><span class="line">OBJS := main.o \</span><br><span class="line">sub.o</span><br><span class="line"></span><br><span class="line">main: $(OBJS)</span><br><span class="line">$(LD) -o  main $(OBJS)</span><br><span class="line"></span><br><span class="line">sub.o: sub.c sub.h</span><br><span class="line">$(CC) $(CFLAGS) -o sub.o sub.c</span><br><span class="line"></span><br><span class="line">main.o: main.c sub.h</span><br><span class="line">$(CC) $(CFLAGS) -o main.o main.c</span><br><span class="line"></span><br><span class="line">clean:</span><br><span class="line">rm $(OBJS)</span><br><span class="line">.PHONY: clean</span><br></pre></td></tr></table></figure><blockquote><p>Tip: 有时候我们的规则可能太长，写在一行又不好看，可以使用<code>\</code>来进行换行。</p></blockquote><h3 id="内置变量"><a href="#内置变量" class="headerlink" title="内置变量"></a>内置变量</h3><p>Makefile中还提供了一些内置变量，比如<code>$(CC)</code>代表默认的C编译器，<code>$(CXX)</code>代表默认的C++编译器。更多内置变量请参考<a href="https://www.gnu.org/software/make/manual/html_node/Implicit-Variables.html" target="_blank" rel="noopener">这里</a></p><h3 id="自动变量"><a href="#自动变量" class="headerlink" title="自动变量"></a>自动变量</h3><p>Makefile中还提供了一些特殊的变量，不用定义且会根据所在的规则而改变，减少一些目标文件名和条件文件名的输入。以下是六个常用的自动变量：</p><table><thead><tr><th>变量名</th><th>作用</th></tr></thead><tbody><tr><td><code>$@</code></td><td>目标的文件名</td></tr><tr><td><code>$&lt;</code></td><td>第一个条件的文件名</td></tr><tr><td><code>$?</code></td><td>时间戳在目标之后的所有条件，并以空格隔开这些条件</td></tr><tr><td><code>$^</code></td><td>所有条件的文件名，并以空格隔开，且排除了重复的条件</td></tr><tr><td><code>$+</code></td><td>与<code>$^</code>类似，只是没有排除重复条件</td></tr><tr><td><code>$*</code></td><td>目标的主文件名，不包含扩展名</td></tr></tbody></table><p>根据以上自动变量，我们可以将上面的示例改成更简便的形式：</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">CC := gcc</span><br><span class="line">LD := gcc</span><br><span class="line">CFLAGS := -c</span><br><span class="line">OBJS := main.o \</span><br><span class="line">sub.o</span><br><span class="line"></span><br><span class="line">main: $(OBJS)</span><br><span class="line">$(LD) -o $@ $^</span><br><span class="line"></span><br><span class="line">sub.o: sub.c sub.h</span><br><span class="line">$(CC) $(CFLAGS) -o $@ $&lt;</span><br><span class="line"></span><br><span class="line">main.o: main.c sub.h</span><br><span class="line">$(CC) $(CFLAGS) -o $@ $&lt;</span><br><span class="line"></span><br><span class="line">clean:</span><br><span class="line">rm $(OBJS)</span><br><span class="line">.PHONY: clean</span><br></pre></td></tr></table></figure><h2 id="后记"><a href="#后记" class="headerlink" title="后记"></a>后记</h2><p>另外，尽管make工具常常用来管理C/C++项目，但是用来管理其他项目也是可以的，比如汇编项目，Pascal项目，甚至是node.js的项目，make就是一个工具，来帮我们管理一些构建的规则，只要规则写的得当，怎么用就随你了。</p><p>最后，make虽然可以很好来管理项目了，但是还是不够方便。试想一下，当Makefile中的规则越来越多，又臭又长的时候，make就又显得很难用了，这也就是为什么cmake诞生的原因。通过编写Cmakelist，来指导cmake生成各种Makefile文件和project文件，从而减轻管理Makefile的负担。</p><hr><p>参考：</p><ul><li><a href="https://www.gnu.org/software/make/manual/make.html#Reading" target="_blank" rel="noopener">GNU make</a></li></ul>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;p&gt;在Linux C/C++的开发过程中，当源代码文件较少时，我们可以手动使用gcc或g++进行编译链接，但是当源代码文件较多且依赖变得复杂时，我们就需要一种简单好用的工具来帮助我们管理。于是，make应运而生。&lt;/p&gt;
+&lt;p&gt;make主要用来管理C/C++项目，通过Makef
+      
+    
+    </summary>
+    
+      <category term="Linux" scheme="https://mingliangliu.com/categories/Linux/"/>
+    
+    
+      <category term="Linux" scheme="https://mingliangliu.com/tags/Linux/"/>
+    
+  </entry>
   
   <entry>
     <title>Python正则表达式</title>
@@ -126,9 +152,9 @@
       <category term="Linux" scheme="https://mingliangliu.com/categories/Linux/"/>
     
     
-      <category term="汇编" scheme="https://mingliangliu.com/tags/%E6%B1%87%E7%BC%96/"/>
-    
       <category term="Linux" scheme="https://mingliangliu.com/tags/Linux/"/>
+    
+      <category term="汇编" scheme="https://mingliangliu.com/tags/%E6%B1%87%E7%BC%96/"/>
     
   </entry>
   
@@ -261,9 +287,9 @@
       <category term="机器学习" scheme="https://mingliangliu.com/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/"/>
     
     
-      <category term="机器学习" scheme="https://mingliangliu.com/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/"/>
-    
       <category term="Linux" scheme="https://mingliangliu.com/tags/Linux/"/>
+    
+      <category term="机器学习" scheme="https://mingliangliu.com/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/"/>
     
   </entry>
   
