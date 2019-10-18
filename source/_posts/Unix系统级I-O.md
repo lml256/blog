@@ -208,6 +208,43 @@ void main(int argc, char **argv) {
 }
 ```
 
+## I/O重定向
+
+这里稍稍提及一下I/O重定向。上文在介绍文件的打开与关闭的时候提到，每一个进程都会维护一个文件描述符表，这个描述符表的表项由进程打开的文件描述符来索引，描述符表项实现了描述符到真实文件的映射关系。但是，如果我们改变这种映射关系，这便是文件重定向。
+
+文件重定向可以使用`dup2`函数：
+
+```C
+#include <unistd.h>
+
+int dup2(int oldfd, int newfd);
+/* 返回：若成功返回非负的描述符，若出错返回-1 */
+```
+
+`dup2`实现了将`newfd`重定向到`oldfd`，这其中实际上是使用`oldfd`的表项去覆盖`newfd`表项以前的内容，如果`newfd`已经打开，则先关闭`newfd`再进行覆盖。并且，如果`newfd`所指向的文件的引用计数变为0，则会释放相应的资源（包括打开文件表、v-node表中的表项）。例如，可以将标准输出重定向到一个文件：
+
+```C
+#include <stdio.h>
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <fcntl.h>
+#include <unistd.h>
+#include <stdlib.h>
+
+void main() {
+	int fd;
+	char c;
+
+	fd = open("foo.txt", O_WRONLY, 0);
+	dup2(fd, 1);
+	while(scanf("%c", &c) != 0) {
+		write(1, &c, 1);
+	}
+	close(fd);
+	exit(0);
+}
+```
+
 ## 标准I/O
 
 C语言中提供了标准的I/O库，里面定义了一组高级的输入输出函数。例如：
