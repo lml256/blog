@@ -71,7 +71,14 @@ per_page: 10
 pagination_dir: page
 
 # Extensions
-## Plugins: https://hexo.io/plugins/
+
+# seo
+Plugins: #https://hexo.io/plugins/
+- hexo-generator-sitemap
+
+sitemap:
+  path: sitemap.xml
+
 ## Themes: https://hexo.io/themes/
 theme: next-reload
 
