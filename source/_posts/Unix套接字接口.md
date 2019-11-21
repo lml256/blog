@@ -285,7 +285,7 @@ int getnameinfo(const struct sockaddr *restrict addr, socklen_t alen,
 #include <stdlib.h>
 #include <string.h>
 
-#define MAXLEN 8096
+#define MAXLEN 8192
 
 int main(int argc, char **argv) {
     struct addrinfo *p, *listp, hints;
