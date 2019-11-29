@@ -55,19 +55,20 @@
   };
 </script>
 
-  <meta name="description" content="前言本篇写于2019-4-25 这两天装Ubuntu18.04双系统简直装到崩溃。一是非常著名的开机卡死在Logo界面的问题，另一个是在装Nvidia驱动和CUDA的时候，更是费心。而网上的资料又良莠不齐，走了不少弯路。于是做个总结，方便以后的自己，也方便别人。 首先：我的机器是戴尔灵越5577，以下方案不一定适合您的机器，操作失败还请自行百度解决，并且安装所CUDA和cuDNN版本请务必参照官网">
+  <meta name="description" content="前言本篇更新于2019-11-29 最近无奈重装了电脑，原来构建好的环境也没了，又要折腾一阵。但是时过境迁，这篇所写的一些方法却不好使了。无奈只好重新Google摸索。 更新主要有一下几点：  更换了所使用的Ubuntu镜像，使用Ubuntu_18.04.3 改变了制作镜像的方法 改变了解决安装Ubuntu时卡死的方法，原来的方法不好用了，可能跟镜像版本有关 使用了更高版本的Nvidia驱动 对于">
 <meta name="keywords" content="Linux,机器学习">
 <meta property="og:type" content="article">
-<meta property="og:title" content="机器学习环境搭建">
+<meta property="og:title" content="Ubuntu双系统搭建GPU机器学习环境">
 <meta property="og:url" content="https://mingliangliu.com/2019/04/24/机器学习环境搭建/index.html">
 <meta property="og:site_name" content="清欢&#39;s Blog">
-<meta property="og:description" content="前言本篇写于2019-4-25 这两天装Ubuntu18.04双系统简直装到崩溃。一是非常著名的开机卡死在Logo界面的问题，另一个是在装Nvidia驱动和CUDA的时候，更是费心。而网上的资料又良莠不齐，走了不少弯路。于是做个总结，方便以后的自己，也方便别人。 首先：我的机器是戴尔灵越5577，以下方案不一定适合您的机器，操作失败还请自行百度解决，并且安装所CUDA和cuDNN版本请务必参照官网">
+<meta property="og:description" content="前言本篇更新于2019-11-29 最近无奈重装了电脑，原来构建好的环境也没了，又要折腾一阵。但是时过境迁，这篇所写的一些方法却不好使了。无奈只好重新Google摸索。 更新主要有一下几点：  更换了所使用的Ubuntu镜像，使用Ubuntu_18.04.3 改变了制作镜像的方法 改变了解决安装Ubuntu时卡死的方法，原来的方法不好用了，可能跟镜像版本有关 使用了更高版本的Nvidia驱动 对于">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="https://mingliangliu.com/images/rufus_en.png">
-<meta property="og:updated_time" content="2019-08-04T16:31:45.377Z">
+<meta property="og:image" content="https://mingliangliu.com/images/机器学习环境搭建1.png">
+<meta property="og:updated_time" content="2019-11-29T15:12:35.136Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="机器学习环境搭建">
-<meta name="twitter:description" content="前言本篇写于2019-4-25 这两天装Ubuntu18.04双系统简直装到崩溃。一是非常著名的开机卡死在Logo界面的问题，另一个是在装Nvidia驱动和CUDA的时候，更是费心。而网上的资料又良莠不齐，走了不少弯路。于是做个总结，方便以后的自己，也方便别人。 首先：我的机器是戴尔灵越5577，以下方案不一定适合您的机器，操作失败还请自行百度解决，并且安装所CUDA和cuDNN版本请务必参照官网">
+<meta name="twitter:title" content="Ubuntu双系统搭建GPU机器学习环境">
+<meta name="twitter:description" content="前言本篇更新于2019-11-29 最近无奈重装了电脑，原来构建好的环境也没了，又要折腾一阵。但是时过境迁，这篇所写的一些方法却不好使了。无奈只好重新Google摸索。 更新主要有一下几点：  更换了所使用的Ubuntu镜像，使用Ubuntu_18.04.3 改变了制作镜像的方法 改变了解决安装Ubuntu时卡死的方法，原来的方法不好用了，可能跟镜像版本有关 使用了更高版本的Nvidia驱动 对于">
 <meta name="twitter:image" content="https://mingliangliu.com/images/rufus_en.png">
   <link rel="alternate" href="/atom.xml" title="清欢's Blog" type="application/atom+xml">
   <link rel="canonical" href="https://mingliangliu.com/2019/04/24/机器学习环境搭建/">
@@ -84,7 +85,7 @@
   };
 </script>
 
-  <title>机器学习环境搭建 | 清欢's Blog</title>
+  <title>Ubuntu双系统搭建GPU机器学习环境 | 清欢's Blog</title>
   
 
 
@@ -239,7 +240,7 @@
       <header class="post-header">
 
         
-          <h2 class="post-title" itemprop="name headline">机器学习环境搭建
+          <h2 class="post-title" itemprop="name headline">Ubuntu双系统搭建GPU机器学习环境
 
               
             
@@ -272,7 +273,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2019-08-05 00:31:45" itemprop="dateModified" datetime="2019-08-05T00:31:45+08:00">2019-08-05</time>
+                <time title="修改时间：2019-11-29 23:12:35" itemprop="dateModified" datetime="2019-11-29T23:12:35+08:00">2019-11-29</time>
               </span>
             
           
@@ -303,18 +304,29 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>本篇写于2019-4-25</p>
+        <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>本篇更新于2019-11-29</p>
+<p>最近无奈重装了电脑，原来构建好的环境也没了，又要折腾一阵。但是时过境迁，这篇所写的一些方法却不好使了。无奈只好重新Google摸索。</p>
+<p>更新主要有一下几点：</p>
+<ul>
+<li>更换了所使用的Ubuntu镜像，使用Ubuntu_18.04.3</li>
+<li>改变了制作镜像的方法</li>
+<li>改变了解决安装Ubuntu时卡死的方法，原来的方法不好用了，可能跟镜像版本有关</li>
+<li>使用了更高版本的Nvidia驱动</li>
+<li>对于CUDA和cuDNN的安装方法并没有更新，但是其安装方法并不会变化太大</li>
+<li>由于Tensorflow已经更新到2.0版本，建议使用新版本的Tensorflow，最后验证环境安装成功的方法也是基于Tensorflow2.0</li>
+</ul>
+<p>以下是修改后的原文：</p>
+<p>本篇写于2019-4-25</p>
 <p>这两天装Ubuntu18.04双系统简直装到崩溃。一是非常著名的开机卡死在Logo界面的问题，另一个是在装Nvidia驱动和CUDA的时候，更是费心。而网上的资料又良莠不齐，走了不少弯路。于是做个总结，方便以后的自己，也方便别人。</p>
 <p>首先：我的机器是戴尔灵越5577，以下方案不一定适合您的机器，操作失败还请自行百度解决，并且安装所CUDA和cuDNN版本请务必参照<a href="https://tensorflow.google.cn/install/source" target="_blank" rel="noopener">官网配置</a></p>
-<p>另外：安装过程中并没有保留截图，以下也只有文字叙述，有时间会补上。</p>
-<h2 id="装机"><a href="#装机" class="headerlink" title="装机"></a>装机</h2><p>镜像是在Ububtu官网下载的镜像，这没有什么异议。启动盘制作方面我选择<a href="https://rufus.ie/" target="_blank" rel="noopener">rufus</a>，小巧免费好用，而且非常适合制作Linux启动盘。</p>
-<p>选好U盘选好镜像后就可以制作了，我是选的默认设置，如下图。我也试过gpt格式的，均可。</p>
+<h2 id="装机"><a href="#装机" class="headerlink" title="装机"></a>装机</h2><p>镜像是在Ububtu官网下载的镜像，这没有什么异议。启动盘制作方面我选择<a href="https://rufus.ie/" target="_blank" rel="noopener">rufus</a>，小巧免费好用，并且非常适合制作Linux启动盘。</p>
+<p>选好U盘选好镜像后就可以制作了，制作启动盘的选项如下：</p>
 <img src="/images/rufus_en.png">
 
 <p>制作完成后，关闭rufus就可以了，带着U盘，重新启动。</p>
 <p>进入U盘引导（不同品牌的电脑有不同的方式，Dell是按F12选择启动方式），进入grub界面。</p>
-<p>你可能看过许多教程说的是，为防止开机开在Logo，选中Install Ubuntu，然后按e编辑。我的建议是先别这样做，因为编辑后进入的安装界面屏幕分辨率会很低，许多按钮在屏幕下方根本点不到，安装很不方便。这里我直接回车开始安装，至于会卡在logo这个问题，装好后再弄。</p>
-<p>然后一步步安装就可以了。装的时候一定要注意：<strong>不要联网</strong>、<strong>不要选安装驱动啥的，最小化安装即可</strong>、<strong>手动分区</strong>。我的分区方式如下，共分给Linux 100G</p>
+<p>为防止开机开在Logo，选中Install Ubuntu，然后按e编辑。在<code>splash</code>后面加上<code>acpi=off</code>，注意前后留一个空格。然后按F10即可正常安装启动了。关于<code>acpi=off</code>具体含义，可以参考<a href="https://askubuntu.com/questions/139157/booting-ubuntu-with-acpi-off-grub-parameter" target="_blank" rel="noopener">这里</a></p>
+<p>我的分区方式如下，共分给Linux 20G：</p>
 <table>
 <thead>
 <tr>
@@ -325,46 +337,35 @@
 </thead>
 <tbody><tr>
 <td align="center">/</td>
-<td align="center">20G</td>
-<td align="center">逻辑分区</td>
+<td align="center">19G</td>
+<td align="center">主分区</td>
 </tr>
 <tr>
-<td align="center">/boot</td>
+<td align="center">swap</td>
 <td align="center">1G</td>
-<td align="center">逻辑分区</td>
-</tr>
-<tr>
-<td align="center">/home</td>
-<td align="center">69G</td>
-<td align="center">逻辑分区</td>
+<td align="center">主分区</td>
 </tr>
 </tbody></table>
-<p>装完后，会显示重新启动，如果点立即重启的话，不出意外，会卡在这里，没关系，按住电源键不放，强制关机。再开机后就可看到系统选择界面了。</p>
-<p>这个时候不要着急选择，先选中Ubuntu，按e键进入编辑，将倒数第二段最后（可能是倒数第三行，不难分辨）的<code>quiet splash</code> 后加上<code>nomodeset</code>，注意<code>nomodeset</code>要和前后有一个空格。然后按F10，即可开机。</p>
-<p>这时候，应该可以进入系统了，这个时候开始安装显卡驱动。</p>
+<p>装完后，会显示重新启动，点击重新启动后，我还是在这里卡住了。按住电源键不放，强制关机后。再开机后却没有问题了。</p>
+<p>但是有的博主也说这个方法会使得装好后的Ubuntu出现诸如键盘灯不亮，触摸板不能用的情况，还要再在grub的配置里把<code>acpi=off</code>去除，但是当我准备去去除的时候却发现grub的配置并没有<code>acpi=off</code>的配置，所以便跳过了这一步。如果你的电脑出现此类情况的话请参考<a href="https://blog.csdn.net/qwqw3qee/article/details/90499038" target="_blank" rel="noopener">这里</a></p>
 <h2 id="安装驱动"><a href="#安装驱动" class="headerlink" title="安装驱动"></a>安装驱动</h2><p>这里有很多教程说是通过<code>sudo ubuntu-drivers autoinstall</code>这个方法安装的，但是就我亲身经历而言，并不好使，这里安装驱动是没问题的，但是后来在安装CUDA的时候会遇到各种各样的问题。</p>
 <p>这里的建议是，去Nvidia的官网选择一个适合你的显卡的驱动（我选的最新的），下载好备用。</p>
 <p>在装驱动之前，先将nouveau加入黑名单：</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo vim /etc/modprobe.d/blacklist.conf</span><br></pre></td></tr></table></figure>
 
-<p>在末尾加上一行<code>blacklist nouveau</code></p>
-<p>保存退出，执行</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo update-initramfs -u</span><br></pre></td></tr></table></figure>
-
-<p>另外：由于折腾的次数比较多我还改了<code>/etc/default/grub</code>，不知道和这有没有关系：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo gedit /etc/default/grub</span><br></pre></td></tr></table></figure>
-
-<p>然后将<code>quiet splash</code>后面加上<code>acpi_osi=linux</code></p>
-<p>保存退出，执行</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo update-grub</span><br></pre></td></tr></table></figure>
-
+<p>在末尾加上一行<code>blacklist nouveau</code>，保存退出并<strong>重启</strong>。</p>
 <p>接下来按CTRL+ALT+F2，进入纯字符界面，以root身份登入，开始安装显卡驱动。首先进入刚才下好的驱动所在的目录，执行</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo sh ./NVIDIA-Linux-x86_64-xxx.xx.run –no-opengl-files  <span class="comment"># 一定不要忘记后面的参数</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">chmod 777 ./NVIDIA-Linux-x86_64-xxx.xx.run</span><br><span class="line">./NVIDIA-Linux-x86_64-xxx.xx.run –no-opengl-files <span class="comment"># 后面的参数可选</span></span><br></pre></td></tr></table></figure>
 
+<blockquote>
+<p>对于第二行的<code>–no-opengl-files</code>参数可选，有的博主遇到安装驱动后在登陆界面循环登录的情况，加了该参数后解决，但是我并没有加也没有问题，可能是新版本的驱动已经解决了这个问题</p>
+</blockquote>
 <p>然后一路确定，完成后重启系统，进入BIOS（戴尔是按F2，其他电脑型号请自行查找资料），<strong>关掉secure boot，设置为disable</strong>，关掉后保存重启。这里<strong>一定要关掉</strong>，不然开机后是没法用刚才装的Nvidia驱动的。</p>
-<p>启动后在控制台输入<code>nvidia-smi</code>，若没有报错则证明安装成功。</p>
+<p>启动后在控制台输入<code>nvidia-smi</code>，若没有报错则证明安装成功。我安装完后如下：</p>
+<img src="/images/机器学习环境搭建1.png">
+
 <h2 id="安装CUDA"><a href="#安装CUDA" class="headerlink" title="安装CUDA"></a>安装CUDA</h2><p>接下来，我们安装CUDA，我这里使用的是CUDA10.0，因为目前tensorflow已经可以使用CUDA10了，也就不挑旧版本安装了。</p>
-<p>到Nvidai官网上找到CUDA10.0的下载链接，Nvidia给出的默认的CUDA的下载链接是CUDA10.1，因为我没试验过，所以不知道可不可以用，你可以自行决定。</p>
+<p>到Nvidia官网上找到CUDA10.0的下载链接，Nvidia给出的默认的CUDA的下载链接是CUDA10.1，因为我没试验过，所以不知道可不可以用，你可以自行决定。</p>
 <p>依次选择 Linux -&gt; x86_64 -&gt; Ubuntu -&gt; 18.04 -&gt; runfile(local)，选好后选择Base Install开始下载。</p>
 <p>下好后，找到CUDA安装包所在的位置，在控制台输入</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo sh ./cuda_10.0.130_410.48_linux.run</span><br></pre></td></tr></table></figure>
@@ -387,18 +388,19 @@
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo cp cuda/include/cudnn.h /usr/<span class="built_in">local</span>/cuda/include/ </span><br><span class="line">sudo cp cuda/lib64/libcudnn* /usr/<span class="built_in">local</span>/cuda/lib64/</span><br></pre></td></tr></table></figure>
 
 <h2 id="最后"><a href="#最后" class="headerlink" title="最后"></a>最后</h2><p>至此，CUDA已安装完成，装个gpu版本的tensorflow试试（你也可以先使用virtualenv创建个虚拟环境再安装）</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pip3 install tensorflow-gpu  <span class="comment"># 这里pip3需要手动下载</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pip3 install tensorflow-gpu  <span class="comment"># 这里pip3需要手动下载，并且默认装TensorFlow2.0</span></span><br></pre></td></tr></table></figure>
 
-<p>装好后，进入python交互环境，试试<code>Hello World</code></p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="keyword">import</span> tensorflow <span class="keyword">as</span> tf</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>hello = tf.constant(<span class="string">'Hello World'</span>)</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>sess = tf.Session()</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>sess.run(hello)</span><br><span class="line"><span class="string">b'Hello World'</span></span><br></pre></td></tr></table></figure>
+<p>装好后，进入python交互环境</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="keyword">import</span> tensorflow <span class="keyword">as</span> tf</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>tf.test.is_gpu_available()</span><br></pre></td></tr></table></figure>
 
-<p>执行后，会有日志打印，若没有报错，即证明安装成功。</p>
+<p>执行后，会有日志打印，若最后显示<code>True</code>，即证明安装成功。</p>
 <hr>
 <p>参考：</p>
 <ul>
 <li><a href="https://blog.csdn.net/qq_32408773/article/details/84111244" target="_blank" rel="noopener">https://blog.csdn.net/qq_32408773/article/details/84111244</a></li>
 <li><a href="https://blog.csdn.net/u010801439/article/details/80483036" target="_blank" rel="noopener">https://blog.csdn.net/u010801439/article/details/80483036</a></li>
 <li><a href="https://www.jianshu.com/p/6f54b4f96556" target="_blank" rel="noopener">https://www.jianshu.com/p/6f54b4f96556</a></li>
+<li><a href="https://blog.csdn.net/qwqw3qee/article/details/90499038" target="_blank" rel="noopener">https://blog.csdn.net/qwqw3qee/article/details/90499038</a></li>
 </ul>
 
     </div>
