@@ -86,5 +86,5 @@ theme: next-reload
 ## Docs: https://hexo.io/docs/deployment.html
 deploy:
   type: git
-  repo: https://github.com/Varpc/varpc.github.io.git
+  repo: git@github.com:lml256/blog.git
   branch: master
