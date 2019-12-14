@@ -47,4 +47,4 @@ $$
 
 ## 开发过程
 
-    
+- [AlphaZ OS: 开发环境配置](/2019/12/12/ck42snhmg0002i3jxz91nfb6u/#more)
