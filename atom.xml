@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://mingliangliu.com/"/>
-  <updated>2019-11-21T10:03:20.983Z</updated>
+  <updated>2020-01-25T16:58:17.897Z</updated>
   <id>https://mingliangliu.com/</id>
   
   <author>
@@ -17,9 +17,69 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>Github Pull Request的提出与采纳</title>
+    <link href="https://mingliangliu.com/2020/01/24/ck5tuae100006wktmha916451/"/>
+    <id>https://mingliangliu.com/2020/01/24/ck5tuae100006wktmha916451/</id>
+    <published>2020-01-24T05:19:54.000Z</published>
+    <updated>2020-01-25T16:58:17.897Z</updated>
+    
+    <content type="html"><![CDATA[<p>这一文来讲解一下Github Pull Request（以下简称PR）的使用方法：</p><ul><li>作为PR的提出者，如何对某个仓库提交PR，如何根据仓库管理者对所提交PR的反馈对PR进行完善</li><li>作为PR的接收者，如何对PR进行测试，对提出者进行反馈以及合并PR到仓库中。</li></ul><p>这里我使用两个GitHub账户来进行说明，PR接收者账户为lml256，PR提出者账户为rikkaii。并以lml256账户中的learngit仓库进行试验。</p><h2 id="如何提出PR"><a href="#如何提出PR" class="headerlink" title="如何提出PR"></a>如何提出PR</h2><p>如果你对Github上的某个开源项目非常感兴趣，想贡献自己的力量为其添加新功能，或者发现了代码中的一些bug，想为其进行修复。那么可以将该开源仓库Fork到你的仓库列表中，并对其进行修改后，向原仓库提交PR，请求仓库的管理员合并你的代码。下面假设我们的账号为rikkaii，并向lml256账号中的learngit项目提交PR为例，详细的说明一下该流程：</p><h3 id="Fork仓库"><a href="#Fork仓库" class="headerlink" title="Fork仓库"></a>Fork仓库</h3><p>Fork仓库非常简单，只需要到仓库首页的右上角点一下Fork按钮即可，Github会自动在你的仓库列表中创建该仓库的一个副本。</p><img src="/images/Github-Pull-Request的提出与采纳1.png"><p>如下图，GitHub自动在你的账户上创建了一个副本，并在仓库名的下方指明了该仓库是Fork来的：</p><img src="/images/Github-Pull-Request的提出与采纳2.png"><h3 id="添加新功能"><a href="#添加新功能" class="headerlink" title="添加新功能"></a>添加新功能</h3><p>现在我们为该仓库添加一些新功能：</p><p>首先将该仓库clone到本地</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">$ git clone git@rikkaii:rikkaii/learngit.git</span><br><span class="line">Cloning into &apos;learngit&apos;...</span><br><span class="line">remote: Enumerating objects: 65, done.</span><br><span class="line">remote: Total 65 (delta 0), reused 0 (delta 0), pack-reused 65</span><br><span class="line">Receiving objects: 100% (65/65), 5.44 KiB | 928.00 KiB/s, done.</span><br><span class="line">Resolving deltas: 100% (17/17), done.</span><br></pre></td></tr></table></figure><p>我们从master分支上新建一个<strong>特性分支</strong>，并在特性分支上面实现我们的新功能。这里简要说明下什么是特性分支：在主流的git开发模式中并不会直接在master上开发，而是在开发某个功能时新建一个分支，叫做特性分支，在其上进行开发，等到开发完成并测试完成后，再合并到master分支中，然后删除该分支。并且特性分支的名称要简明扼要，方便别人明白其作用。这里我们创建一个<code>python-div</code>分支用于开发新功能。</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ git checkout -b python-div</span><br><span class="line">Switched to a new branch &apos;python-div&apos;</span><br></pre></td></tr></table></figure><p>我们在目录中创建一个<code>div.py</code>文件并在其编写一些代码：</p><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># div.py</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># div.py</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">div</span><span class="params">(a, b)</span>:</span></span><br><span class="line">    ans = a / b</span><br><span class="line">    <span class="keyword">return</span> ans</span><br></pre></td></tr></table></figure><p>然后进行提交，并推送到GitHub：</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">$ git add div.py</span><br><span class="line"></span><br><span class="line">$ git commit -m <span class="string">"add div.py"</span></span><br><span class="line">[python-div 7aad1de] add div.py</span><br><span class="line"> 1 file changed, 5 insertions(+)</span><br><span class="line"> create mode 100644 div.py</span><br><span class="line"></span><br><span class="line">$ git push --<span class="built_in">set</span>-upstream origin python-div</span><br><span class="line">...</span><br><span class="line">To rikkaii:rikkaii/learngit.git</span><br><span class="line"> * [new branch]      python-div -&gt; python-div</span><br><span class="line">Branch <span class="string">'python-div'</span> <span class="built_in">set</span> up to track remote branch <span class="string">'python-div'</span> from <span class="string">'origin'</span>.</span><br></pre></td></tr></table></figure><p>在上面的命令中，由于python-div分支是我们本地新建的，在GitHub远程仓库中并没有该分支的相关信息，为了能够将该分支的修改推送到GitHub远程仓库上，在推送时需要添加<code>--set-upstream</code>参数，这样会在远程仓库中也创建一个python-div分支，并将该分支的修改推送上去。</p><img src="/images/Github-Pull-Request的提出与采纳3.png"><p>可以看到，我们的仓库中已经有了python-div分支以及本次commit添加的div.py文件。</p><h3 id="发起PR"><a href="#发起PR" class="headerlink" title="发起PR"></a>发起PR</h3><p>接下来，你可以点击上图中分支名称旁边的的New pull Request按钮来发起一个PR。这会自动跳转到原仓库下面，并选择python-div作为要推送的分支，如下：</p><img src="/images/Github-Pull-Request的提出与采纳4.png"><p>至于要将python-div分支上的修改推送到原仓库的什么分支上，Github在这里自动为我们选择了master分支，这里需要注意的是分支的选择与原仓库使用的什么开发模式有关，一般正规的开源仓库都会说明PR的提交规则，包括提交到什么分支以及如何描述commit等等，这需要我们仔细阅读相关的要求并遵循。这里为了演示方便，将python-div分支的修改请求推送到原仓库的master上，并且在上图下面的说明栏里也只是使用GitHub的默认说明。</p><p>接下来便可以点击上图下面的Create pull request按钮来创建一个分支了。</p><img src="/images/Github-Pull-Request的提出与采纳5.png"><p>当出现上图的样子后，我们的PR就创建成功了。我们只需要静静等待仓库管理员的审核就行了。</p><h3 id="修正PR"><a href="#修正PR" class="headerlink" title="修正PR"></a>修正PR</h3><p>但是，有些事总是事与愿违，有时候我们认为我们的代码没有问题，但是却被仓库管理员反馈（或者被其他开发者指出）我们的代码有问题，需要我们修复。管理员通过对我们的代码进行审计后，指出了我们的错误，Github也会将管理员与我们之间及其他开发者之间（这里并没有其他开发者）对该次PR的讨论反映在了时间轴上，并会以邮件的形式通知我们：</p><img src="/images/Github-Pull-Request的提出与采纳11.png"><p>接下来，我们按照仓库管理员的要求，对代码进行完善，修改后的代码如下：</p><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># div.py</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">div</span><span class="params">(a, b)</span>:</span></span><br><span class="line">    <span class="keyword">try</span>:</span><br><span class="line">        ans = a / b</span><br><span class="line">    <span class="keyword">except</span> ZeroDivisionError <span class="keyword">as</span> e:</span><br><span class="line">        print(<span class="string">'error:'</span>, e)</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">None</span></span><br><span class="line">    <span class="keyword">return</span> ans</span><br></pre></td></tr></table></figure><p>修改完成后，对代码进行提交并推送到GitHub：</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">$ git add div.py</span><br><span class="line"></span><br><span class="line">$ git commit -m &quot;fix zero division error&quot;</span><br><span class="line">[python-div c3b73e7] fix zero division error</span><br><span class="line"> 1 file changed, 5 insertions(+), 1 deletion(-)</span><br><span class="line"></span><br><span class="line">$ git push</span><br><span class="line">...</span><br><span class="line">To rikkaii:rikkaii/learngit.git</span><br><span class="line">   7aad1de..c3b73e7  python-div -&gt; python-div</span><br></pre></td></tr></table></figure><p>当我们推送完后，无需再次发起PR，Github会自动的将该次的提交反映到原来PR时间轴上，如下图，并且Github还会向管理员发送邮件通知本次修改：</p><img src="/images/Github-Pull-Request的提出与采纳12.png"><p>当仓库管理者通过了本次代码，将我们的代码合并到了master分支中后，我们也会收到Github发来的关于Merge本次PR的邮件通知。</p><h2 id="接收PR"><a href="#接收PR" class="headerlink" title="接收PR"></a>接收PR</h2><p>说完了如何提交PR，我们再说一说如何接收PR。作为一个开源项目的管理者，学会如何测试别人提出的PR并进行反馈或者合并是很必要的。这里假设我们的账号为lml256，以接收rikkaii账号向lml256账号中的learngit仓库提交的PR为例，详细的说明一下作为仓库的管理者，如何测试和合并PR。</p><h3 id="审计PR"><a href="#审计PR" class="headerlink" title="审计PR"></a>审计PR</h3><p>打开我们的仓库，在Pull Requests列表中可以看到rikkaii向我们的仓库提交了一个PR</p><img src="/images/Github-Pull-Request的提出与采纳6.png"><p>点进去可以看到详细的信息：</p><img src="/images/Github-Pull-Request的提出与采纳7.png"><p>我们可以在Files changed栏里对代码进行审计，如果代码有问题的话，可以对每行代码添加批注，以帮助PR提交者进行完善，写完批注后，点击start a review便可发起一个code review。如下：</p><img src="/images/Github-Pull-Request的提出与采纳8.png"><p>当代码全部都审计完后，点击下图中的submit review便可以提交本次的审计结果。</p><img src="/images/Github-Pull-Request的提出与采纳9.png"><p>提交后，我们对代码的审计结果便会反映在该PR的时间轴上，并且GitHub会向PR发起者发送回复通知邮件。</p><img src="/images/Github-Pull-Request的提出与采纳10.png"><h3 id="对PR进行本地测试"><a href="#对PR进行本地测试" class="headerlink" title="对PR进行本地测试"></a>对PR进行本地测试</h3><p>只在Github上凭借眼睛看并不能发现所有的问题，在对PR正式合并前，我们还需要对PR进行本地测试，如何使用git进行操作如下图：</p><img src="/images/Github-Pull-Request的提出与采纳14.png"><p>首先我们需要将我们仓库的代码clone到本地（也可能不需要clone，如果本地已经有该仓库的话），然后拉取PR发起者仓库的相关信息，这需要我们先将PR发起者Fork的仓库添加到本地仓库的远程仓库：</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">$ git remote add PR_Sponsor git@rikkaii:rikkaii/learngit.git</span><br><span class="line"></span><br><span class="line">$ git fetch PR_Sponsor  # 获取PR发起者仓库的相关信息</span><br><span class="line">...</span><br><span class="line">From rikkaii:rikkaii/learngit</span><br><span class="line"> * [new branch]      dev        -&gt; PR_Sponsor/dev</span><br><span class="line"> * [new branch]      master     -&gt; PR_Sponsor/master</span><br><span class="line"> * [new branch]      python-div -&gt; PR_Sponsor/python-div</span><br></pre></td></tr></table></figure><p>可以看到，我们从PR发起者仓库中获取到三个分支，其中包括为我们提交PR的python-div分支。</p><p>在进行测试之前，我们还需要创建一个特性分支用于测试PR，并将python-div分支的修改merge到特性分支上进行测试：</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">$ git checkout -b test_pr</span><br><span class="line">Switched to a new branch &apos;test_pr&apos;</span><br><span class="line"></span><br><span class="line">$ git merge PR_Sponsor/python-div</span><br><span class="line">Updating 9053d5b..c3b73e7</span><br><span class="line">Fast-forward</span><br><span class="line"> div.py | 9 +++++++++</span><br><span class="line"> 1 file changed, 9 insertions(+)</span><br><span class="line"> create mode 100644 div.py</span><br></pre></td></tr></table></figure><h3 id="Merge代码"><a href="#Merge代码" class="headerlink" title="Merge代码"></a>Merge代码</h3><p>经过一番测试后，我们确信该PR的代码没有问题，可以合并代码到PR发起者要求合并到的分支上（这里是master）。这里有两种方法来处理这个问题，一是直接使用GitHub提供的Merge按钮，这种方法比较直观方便，但是不够灵活，无法处理合并冲突；二是在本地将测试后的特性分支合并到要合并的分支上，然后手动提交。尽管第二种方式处理起来比较复杂，但是却比较灵活，可以处理Github不能胜任的地方。这里我们选择第二种：</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">$ git checkout master</span><br><span class="line">Switched to branch &apos;master&apos;</span><br><span class="line">Your branch is up to date with &apos;origin/master&apos;.</span><br><span class="line"></span><br><span class="line">$ git merge test_pr</span><br><span class="line">Updating 9053d5b..c3b73e7</span><br><span class="line">Fast-forward</span><br><span class="line"> div.py | 9 +++++++++</span><br><span class="line"> 1 file changed, 9 insertions(+)</span><br><span class="line"> create mode 100644 div.py</span><br><span class="line"></span><br><span class="line">$ git branch -d test_pr   # 这里我们的特性分支已没作用，可以删除</span><br><span class="line">Deleted branch test_pr (was c3b73e7).</span><br><span class="line"></span><br><span class="line">$ git push</span><br><span class="line">...</span><br><span class="line">To lml256:lml256/learngit.git</span><br><span class="line">   9053d5b..c3b73e7  master -&gt; master</span><br></pre></td></tr></table></figure><p>这里，我们已经处理完了该PR，同时，GitHub也会检测到我们合并了该PR，也将其反映到该PR的时间轴上，并将该PR的状态设置为Merged状态，关闭该次PR：</p><img src="/images/Github-Pull-Request的提出与采纳13.png"><hr><p>完</p><p>版权所有，未经允许不得转载</p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;p&gt;这一文来讲解一下Github Pull Request（以下简称PR）的使用方法：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;作为PR的提出者，如何对某个仓库提交PR，如何根据仓库管理者对所提交PR的反馈对PR进行完善&lt;/li&gt;
+&lt;li&gt;作为PR的接收者，如何对PR进行测试，对提出者进行反
+      
+    
+    </summary>
+    
+      <category term="git" scheme="https://mingliangliu.com/categories/git/"/>
+    
+    
+      <category term="git" scheme="https://mingliangliu.com/tags/git/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>AlphaZ OS: 开发环境配置</title>
+    <link href="https://mingliangliu.com/2019/12/12/ck5tuae0t0002wktmqym44f9g/"/>
+    <id>https://mingliangliu.com/2019/12/12/ck5tuae0t0002wktmqym44f9g/</id>
+    <published>2019-12-12T14:03:28.000Z</published>
+    <updated>2019-12-15T04:34:43.528Z</updated>
+    
+    <content type="html"><![CDATA[<div class="note success">            <p>该篇是有关操作系统自制的系列文章，请参考<a href="/AlphaZ/">目录</a></p>          </div><p>开发环境配置起来很简单，只要五步就可以</p><p>开始之前，请先更新一下包列表和已安装的包</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ sudo apt update</span><br><span class="line">$ sudo apt upgrade</span><br></pre></td></tr></table></figure><h2 id="安装构建环境"><a href="#安装构建环境" class="headerlink" title="安装构建环境"></a>安装构建环境</h2><p>打开终端，执行下面的命令，安装需的编译器和链接器等软件，包括gcc、g++、gdb、make等，并且下面安装bochs时也需要这些构建软件</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo apt install build-essential</span><br></pre></td></tr></table></figure><h2 id="安装nasm"><a href="#安装nasm" class="headerlink" title="安装nasm"></a>安装nasm</h2><p>nasm是一个开源的汇编语言编译器，其安装方式如下：</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ sudo apt install nasm</span><br><span class="line">$ nasm --version</span><br><span class="line">NASM version 2.13.02</span><br></pre></td></tr></table></figure><h2 id="安装bochs"><a href="#安装bochs" class="headerlink" title="安装bochs"></a>安装bochs</h2><p>bochs是一个开源的并支持调试功能的虚拟机，它是我们开发操作系统时用于调试的主要工具。</p><p>你可以在<a href="https://sourceforge.net/projects/bochs/files/bochs/2.6.10/bochs-2.6.10.tar.gz/download" target="_blank" rel="noopener">这里</a>下载bochs</p><p>现在完成后，进入下载好的压缩包所在的目录，执行：</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">$ tar xzvf bochs-2.6.10.tar.gz</span><br><span class="line">$ <span class="built_in">cd</span> bochs-2.6.10/</span><br><span class="line"></span><br><span class="line"><span class="comment"># 由于bochs依赖gtk，首先安装</span></span><br><span class="line">$ sudo apg-get install libgtk2.0-dev</span><br><span class="line"></span><br><span class="line"><span class="comment"># 一定要加上 --enable-debugger --enable-disasm 打开bochs的调试功能</span></span><br><span class="line"><span class="comment"># 由于bochs的中并为指明X11所在的目录，需要手动指定，避免报错</span></span><br><span class="line">$ ./configure --<span class="built_in">enable</span>-debugger --<span class="built_in">enable</span>-disasm --x-include=/usr/include/X11 --x-lib=/usr/lib/x11</span><br><span class="line">$ make</span><br><span class="line">$ make install</span><br></pre></td></tr></table></figure><p>至此，我们要使用的工具就安装完毕了</p><h2 id="创建虚拟软盘"><a href="#创建虚拟软盘" class="headerlink" title="创建虚拟软盘"></a>创建虚拟软盘</h2><p>现在我们的虚拟机还没有启动盘，还没有办法工作。bochs中有一个bximage程序可以供我们创建一个虚拟软盘。我们在此后的开发中，便可以将我们写的程序烧录到该软盘中，然后供bochs启动。</p><p>在shell中输入<code>bximage</code>命令，便可以按下面的步骤创建一个虚拟软盘了。</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line">$ bximage </span><br><span class="line">========================================================================</span><br><span class="line">                                bximage</span><br><span class="line">  Disk Image Creation / Conversion / Resize and Commit Tool for Bochs</span><br><span class="line">         $Id: bximage.cc 13481 2018-03-30 21:04:04Z vruppert $</span><br><span class="line">========================================================================</span><br><span class="line"></span><br><span class="line">1. Create new floppy or hard disk image</span><br><span class="line">2. Convert hard disk image to other format (mode)</span><br><span class="line">3. Resize hard disk image</span><br><span class="line">4. Commit &apos;undoable&apos; redolog to base image</span><br><span class="line">5. Disk image info</span><br><span class="line"></span><br><span class="line">0. Quit</span><br><span class="line"></span><br><span class="line">Please choose one [0] 1</span><br><span class="line"></span><br><span class="line">Create image</span><br><span class="line"></span><br><span class="line">Do you want to create a floppy disk image or a hard disk image?</span><br><span class="line">Please type hd or fd. [hd] fd</span><br><span class="line"></span><br><span class="line">Choose the size of floppy disk image to create.</span><br><span class="line">Please type 160k, 180k, 320k, 360k, 720k, 1.2M, 1.44M, 1.68M, 1.72M, or 2.88M.</span><br><span class="line"> [1.44M] </span><br><span class="line"></span><br><span class="line">What should be the name of the image?</span><br><span class="line">[a.img] </span><br><span class="line"></span><br><span class="line">Creating floppy image &apos;a.img&apos; with 2880 sectors</span><br><span class="line"></span><br><span class="line">The following line should appear in your bochsrc:</span><br><span class="line">  floppya: image=&quot;a.img&quot;, status=inserted</span><br></pre></td></tr></table></figure><h2 id="bochs虚拟机配置文件"><a href="#bochs虚拟机配置文件" class="headerlink" title="bochs虚拟机配置文件"></a>bochs虚拟机配置文件</h2><p>现在有了虚拟机又有了虚拟软盘，离我们的目标又进了一步。但是有了这些后我们的虚拟机该如何工作呢，这就需要我们给bochs一个配置文件。告诉我们虚拟机启动时加载哪个虚拟盘、给虚拟机多少内存等等。你可以直接在工作目录下创建一个文本文件，写入以下内容：</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"># 内存32M</span><br><span class="line">megs: 32</span><br><span class="line"></span><br><span class="line">romimage: file=/usr/local/share/bochs/BIOS-bochs-latest</span><br><span class="line"></span><br><span class="line">vgaromimage: file=/usr/local/share/bochs/VGABIOS-lgpl-latest</span><br><span class="line"></span><br><span class="line"># 虚拟机的盘</span><br><span class="line">floppya: 1_44=a.img, status=inserted</span><br><span class="line"></span><br><span class="line"># 启动盘</span><br><span class="line">boot: floppy</span><br><span class="line"></span><br><span class="line">log: bochsout.txt</span><br><span class="line"></span><br><span class="line">mouse: enabled=0</span><br><span class="line"># 键盘映射</span><br><span class="line">keyboard: keymap=/usr/local/share/bochs/keymaps/x11-pc-us.map</span><br></pre></td></tr></table></figure><p>将文件保存后，在shell中输入<code>bochs -f &lt;配置文件&gt;</code>即可启动我们的虚拟机了。需要说明的一点是，如果你将配置文件命名为<code>bochsrc</code>，那么直接输入<code>bochs</code>就可启动我们的虚拟就了，bochs会在当前目录下自动寻找名叫<code>bochsrc</code>的文件作为自己的配置文件。</p><p>至此，我们的环境配置完成了。但是如果你启动bochs虚拟机的除了报错外并无其他，那是因为我们的启动盘只是一个空盘，并没有程序供bochs启动。下面，我们来写一个简单的程序烧录进软盘，用bochs虚拟机运行，来验证一下我们的环境。</p><h2 id="验证"><a href="#验证" class="headerlink" title="验证"></a>验证</h2><p>进入你的工作目录，创建一个<code>test.asm</code>文件，并在其中写入以下内容并保存：</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">org         7c00h</span><br><span class="line"></span><br><span class="line">    movax, 0xb800</span><br><span class="line">movgs, ax</span><br><span class="line">movah, 0x02</span><br><span class="line">moval, &apos;S&apos;</span><br><span class="line">mov[gs:((80*10+40)*2)], ax</span><br><span class="line"></span><br><span class="line">hlt</span><br><span class="line"></span><br><span class="line">times510-($-$$) db 0</span><br><span class="line">dw0xaa55</span><br></pre></td></tr></table></figure><p>该程序的作用是在屏幕中央显示一个绿色的<code>S</code></p><p>按照下面的命令来对程序进行编译并烧录进虚拟软盘的第一个扇区：</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">$ nasm -o test.bin test.asm </span><br><span class="line">$ dd if=test.bin of=a.img bs=512 count=1 conv=notrunc </span><br><span class="line">记录了1+0 的读入</span><br><span class="line">记录了1+0 的写出</span><br><span class="line">512 bytes copied, 0.000354724 s, 1.4 MB/s</span><br></pre></td></tr></table></figure><p>现在输入<code>bochs</code>，即可启动bochs虚拟机了。按照虚拟机的提示，第一步直接回车，然后再键入<code>c</code>，回车，如果你在虚拟机的屏幕中央看到一个绿色的<code>S</code>（如下），那么恭喜你，环境配置成功。</p><img src="/images/AlphaZOS开发环境配置.png"><hr>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;div class=&quot;note success&quot;&gt;
+            &lt;p&gt;该篇是有关操作系统自制的系列文章，请参考&lt;a href=&quot;/AlphaZ/&quot;&gt;目录&lt;/a&gt;&lt;/p&gt;
+          &lt;/div&gt;
+
+&lt;p&gt;开发环境配置起来很简单，只要五步就可以&lt;/p&gt;
+&lt;p&gt;
+      
+    
+    </summary>
+    
+      <category term="AlphaZ" scheme="https://mingliangliu.com/categories/AlphaZ/"/>
+    
+    
+      <category term="操作系统" scheme="https://mingliangliu.com/tags/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/"/>
+    
+      <category term="AlphaZ" scheme="https://mingliangliu.com/tags/AlphaZ/"/>
+    
+  </entry>
+  
+  <entry>
     <title>Unix套接字接口</title>
-    <link href="https://mingliangliu.com/2019/11/20/ck40wa4j10007iktmiy4pjjvq/"/>
-    <id>https://mingliangliu.com/2019/11/20/ck40wa4j10007iktmiy4pjjvq/</id>
+    <link href="https://mingliangliu.com/2019/11/20/ck5tuae15000bwktmlg6wvjey/"/>
+    <id>https://mingliangliu.com/2019/11/20/ck5tuae15000bwktmlg6wvjey/</id>
     <published>2019-11-20T09:40:22.000Z</published>
     <updated>2019-11-21T10:03:20.983Z</updated>
     
@@ -43,8 +103,8 @@
   
   <entry>
     <title>健壮的I/O(RIO)</title>
-    <link href="https://mingliangliu.com/2019/10/19/ck40wa4jj000uiktmhq8r9olq/"/>
-    <id>https://mingliangliu.com/2019/10/19/ck40wa4jj000uiktmhq8r9olq/</id>
+    <link href="https://mingliangliu.com/2019/10/19/ck5tuae1o0013wktmketaq9gu/"/>
+    <id>https://mingliangliu.com/2019/10/19/ck5tuae1o0013wktmketaq9gu/</id>
     <published>2019-10-19T03:52:47.000Z</published>
     <updated>2019-10-19T10:38:22.674Z</updated>
     
@@ -64,8 +124,8 @@
   
   <entry>
     <title>Unix系统级I/O</title>
-    <link href="https://mingliangliu.com/2019/10/18/ck40wa4j30008iktmaa5hpcx8/"/>
-    <id>https://mingliangliu.com/2019/10/18/ck40wa4j30008iktmaa5hpcx8/</id>
+    <link href="https://mingliangliu.com/2019/10/18/ck5tuae17000cwktmj4ubn0tm/"/>
+    <id>https://mingliangliu.com/2019/10/18/ck5tuae17000cwktmj4ubn0tm/</id>
     <published>2019-10-18T09:22:59.000Z</published>
     <updated>2019-10-18T15:21:30.246Z</updated>
     
@@ -90,12 +150,12 @@
   
   <entry>
     <title>make工具简介</title>
-    <link href="https://mingliangliu.com/2019/10/14/ck40wa4j4000biktm4wbx6a5n/"/>
-    <id>https://mingliangliu.com/2019/10/14/ck40wa4j4000biktm4wbx6a5n/</id>
+    <link href="https://mingliangliu.com/2019/10/14/ck5tuae19000gwktm4b4vqd82/"/>
+    <id>https://mingliangliu.com/2019/10/14/ck5tuae19000gwktm4b4vqd82/</id>
     <published>2019-10-14T13:58:35.000Z</published>
-    <updated>2019-10-14T15:50:45.986Z</updated>
+    <updated>2019-12-17T08:41:48.347Z</updated>
     
-    <content type="html"><![CDATA[<p>在Linux C/C++的开发过程中，当源代码文件较少时，我们可以手动使用gcc或g++进行编译链接，但是当源代码文件较多且依赖变得复杂时，我们就需要一种简单好用的工具来帮助我们管理。于是，make应运而生。</p><p>make主要用来管理C/C++项目，通过Makefile书写的规则来对项目中的源代码文件进行编译，生成可执行的程序。</p><h2 id="make流程"><a href="#make流程" class="headerlink" title="make流程"></a>make流程</h2><p>make执行的主要过程如下：当在shell中使用make命令时，make会寻找当前目录下的Makefile文件，根据该文件中的规则来确定依赖关系，如果一个文件所依赖的文件比这个文件要新，或者说修改时间更晚，那么make会根据Makefile中指明的命令来重新编译生成该文件。</p><p>另外，make除了自动寻找定义了编译规则的Makefile文件外，还可以手动指明定义了规则的文件。比如：</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ make -f rule.txt  # rule.txt中为make规则</span><br></pre></td></tr></table></figure><h2 id="Makefile的写法"><a href="#Makefile的写法" class="headerlink" title="Makefile的写法"></a>Makefile的写法</h2><h3 id="规则"><a href="#规则" class="headerlink" title="规则"></a>规则</h3><p>Makefile由一系列的规则构成，一条规则的基本格式如下：</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">目标 : 条件 </span><br><span class="line">[tab]  命令</span><br></pre></td></tr></table></figure><p>其中，需要在命令之前加一个Tab制表符，并且条件和命令都是可以省略的，但是只能省略其一，条件省略时一般做一些编译以外的其他工作，当命令省略时其实也可以对目标进行编译生成，这涉及到了Makefile中的隐式规则，这里不过多赘述，我们只讨论显式规则。</p><p>如make流程所述，当条件中的文件比目标要新时，会执行tab后的命令。</p><p>Makefile中有很多规则时，当在shell中执行<code>make</code>命令，默认会将第一条规则的目标作为最终生成的目标。</p><p>比如下面这个Makefile例子：</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">main: main.o sub.o</span><br><span class="line">gcc -o main main.o sub.o</span><br><span class="line"></span><br><span class="line">sub.o: sub.c sub.h</span><br><span class="line">gcc -c -o sub.o sub.c</span><br><span class="line"></span><br><span class="line">main.o: main.c sub.h</span><br><span class="line">gcc -c -o main.o main.c</span><br><span class="line"></span><br><span class="line">clean:</span><br><span class="line">rm sub.o main.o</span><br><span class="line"></span><br><span class="line">.PHONY: clean</span><br></pre></td></tr></table></figure><p>当我们在shell中执行make时，会最终生成<code>main</code>这个最终目标。</p><p>但是如果我们只想生成某个中间的目标也是可以的，比如只生成<code>sub.o</code>，只需要采用<code>make 最终目标</code>的形式就可以了，即<code>make sub.o</code></p><p>注意到示例中省略了条件的那条规则（目标为clean的那条规则），正规上把它叫做伪目标，用来执行一些其他的任务，如本例中清除编译中生成的.o文件。当然，伪目标下的命令可以是多种多样的，比如将<code>clean</code>下的命令改为<code>ls</code>，当执行<code>make clean</code>时，会列出当前目录下的所有文件。但是有一点需要注意的是，如果我们的目录下已经有了一个叫做clean的文件，当我们执行<code>make clean</code>时，make就分不清这个clean到底是那个了，为了避免这种情况，需要用<code>.PHONY: 伪目标1，伪目标2..</code>的方式来显式的声明伪目标。</p><h3 id="变量"><a href="#变量" class="headerlink" title="变量"></a>变量</h3><p>当我们Makefile中的规则变得非常多时，为了方便，也为了可维护性，我们一般使用变量来代替某些信息。</p><p>Makefile中定义变量的格式如下：</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">变量名 := 变量值</span><br></pre></td></tr></table></figure><p>其中<code>:=</code>也该以使用<code>=</code>，依个人喜好。用<code>$(变量名)</code>的形式来使用变量。</p><p>先前示例中便可精简如下：</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">CC := gcc</span><br><span class="line">LD := gcc</span><br><span class="line">CFLAGS := -c</span><br><span class="line">OBJS := main.o \</span><br><span class="line">sub.o</span><br><span class="line"></span><br><span class="line">main: $(OBJS)</span><br><span class="line">$(LD) -o  main $(OBJS)</span><br><span class="line"></span><br><span class="line">sub.o: sub.c sub.h</span><br><span class="line">$(CC) $(CFLAGS) -o sub.o sub.c</span><br><span class="line"></span><br><span class="line">main.o: main.c sub.h</span><br><span class="line">$(CC) $(CFLAGS) -o main.o main.c</span><br><span class="line"></span><br><span class="line">clean:</span><br><span class="line">rm $(OBJS)</span><br><span class="line">.PHONY: clean</span><br></pre></td></tr></table></figure><blockquote><p>Tip: 有时候我们的规则可能太长，写在一行又不好看，可以使用<code>\</code>来进行换行。</p></blockquote><h3 id="内置变量"><a href="#内置变量" class="headerlink" title="内置变量"></a>内置变量</h3><p>Makefile中还提供了一些内置变量，比如<code>$(CC)</code>代表默认的C编译器，<code>$(CXX)</code>代表默认的C++编译器。更多内置变量请参考<a href="https://www.gnu.org/software/make/manual/html_node/Implicit-Variables.html" target="_blank" rel="noopener">这里</a></p><h3 id="自动变量"><a href="#自动变量" class="headerlink" title="自动变量"></a>自动变量</h3><p>Makefile中还提供了一些特殊的变量，不用定义且会根据所在的规则而改变，减少一些目标文件名和条件文件名的输入。以下是六个常用的自动变量：</p><table><thead><tr><th>变量名</th><th>作用</th></tr></thead><tbody><tr><td><code>$@</code></td><td>目标的文件名</td></tr><tr><td><code>$&lt;</code></td><td>第一个条件的文件名</td></tr><tr><td><code>$?</code></td><td>时间戳在目标之后的所有条件，并以空格隔开这些条件</td></tr><tr><td><code>$^</code></td><td>所有条件的文件名，并以空格隔开，且排除了重复的条件</td></tr><tr><td><code>$+</code></td><td>与<code>$^</code>类似，只是没有排除重复条件</td></tr><tr><td><code>$*</code></td><td>目标的主文件名，不包含扩展名</td></tr></tbody></table><p>根据以上自动变量，我们可以将上面的示例改成更简便的形式：</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">CC := gcc</span><br><span class="line">LD := gcc</span><br><span class="line">CFLAGS := -c</span><br><span class="line">OBJS := main.o \</span><br><span class="line">sub.o</span><br><span class="line"></span><br><span class="line">main: $(OBJS)</span><br><span class="line">$(LD) -o $@ $^</span><br><span class="line"></span><br><span class="line">sub.o: sub.c sub.h</span><br><span class="line">$(CC) $(CFLAGS) -o $@ $&lt;</span><br><span class="line"></span><br><span class="line">main.o: main.c sub.h</span><br><span class="line">$(CC) $(CFLAGS) -o $@ $&lt;</span><br><span class="line"></span><br><span class="line">clean:</span><br><span class="line">rm $(OBJS)</span><br><span class="line">.PHONY: clean</span><br></pre></td></tr></table></figure><h2 id="后记"><a href="#后记" class="headerlink" title="后记"></a>后记</h2><p>另外，尽管make工具常常用来管理C/C++项目，但是用来管理其他项目也是可以的，比如汇编项目，Pascal项目，甚至是node.js的项目，make就是一个工具，来帮我们管理一些构建的规则，只要规则写的得当，怎么用就随你了。</p><p>最后，make虽然可以很好来管理项目了，但是还是不够方便。试想一下，当Makefile中的规则越来越多，又臭又长的时候，make就又显得很难用了，这也就是为什么cmake诞生的原因。通过编写Cmakelist，来指导cmake生成各种Makefile文件和project文件，从而减轻管理Makefile的负担。</p><hr><p>参考：</p><ul><li><a href="https://www.gnu.org/software/make/manual/make.html#Reading" target="_blank" rel="noopener">GNU make</a></li></ul>]]></content>
+    <content type="html"><![CDATA[<p>在Linux C/C++的开发过程中，当源代码文件较少时，我们可以手动使用gcc或g++进行编译链接，但是当源代码文件较多且依赖变得复杂时，我们就需要一种简单好用的工具来帮助我们管理。于是，make应运而生。</p><p>make主要用来管理C/C++项目，通过Makefile书写的规则来对项目中的源代码文件进行编译，生成可执行的程序。</p><h2 id="make流程"><a href="#make流程" class="headerlink" title="make流程"></a>make流程</h2><p>make执行的主要过程如下：当在shell中使用make命令时，make会寻找当前目录下的Makefile文件，根据该文件中的规则来确定依赖关系，如果一个文件所依赖的文件比这个文件要新，或者说修改时间更晚，那么make会根据Makefile中指明的命令来重新编译生成该文件。</p><p>另外，make除了自动寻找定义了编译规则的Makefile文件外，还可以手动指明定义了规则的文件。比如：</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ make -f rule.txt  # rule.txt中为make规则</span><br></pre></td></tr></table></figure><h2 id="Makefile的写法"><a href="#Makefile的写法" class="headerlink" title="Makefile的写法"></a>Makefile的写法</h2><h3 id="规则"><a href="#规则" class="headerlink" title="规则"></a>规则</h3><p>Makefile由一系列的规则构成，一条规则的基本格式如下：</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">目标 : 条件 </span><br><span class="line">[tab]  命令</span><br></pre></td></tr></table></figure><p>其中，需要在命令之前加一个Tab制表符，并且条件和命令都是可以省略的，但是只能省略其一，条件省略时一般做一些编译以外的其他工作，当命令省略时其实也可以对目标进行编译生成，这涉及到了Makefile中的隐式规则，这里不过多赘述，我们只讨论显式规则。</p><p>如make流程所述，当条件中的文件比目标要新时，会执行tab后的命令。</p><p>Makefile中有很多规则时，当在shell中执行<code>make</code>命令，默认会将第一条规则的目标作为最终生成的目标。</p><p>比如下面这个Makefile例子：</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">main: main.o sub.o</span><br><span class="line">gcc -o main main.o sub.o</span><br><span class="line"></span><br><span class="line">sub.o: sub.c sub.h</span><br><span class="line">gcc -c -o sub.o sub.c</span><br><span class="line"></span><br><span class="line">main.o: main.c sub.h</span><br><span class="line">gcc -c -o main.o main.c</span><br><span class="line"></span><br><span class="line">clean:</span><br><span class="line">rm sub.o main.o</span><br><span class="line"></span><br><span class="line">.PHONY: clean</span><br></pre></td></tr></table></figure><p>当我们在shell中执行make时，会最终生成<code>main</code>这个最终目标。</p><p>但是如果我们只想生成某个中间的目标也是可以的，比如只生成<code>sub.o</code>，只需要采用<code>make 最终目标</code>的形式就可以了，即<code>make sub.o</code></p><p>注意到示例中省略了条件的那条规则（目标为clean的那条规则），正规上把它叫做伪目标，用来执行一些其他的任务，如本例中清除编译中生成的.o文件。当然，伪目标下的命令可以是多种多样的，比如将<code>clean</code>下的命令改为<code>ls</code>，当执行<code>make clean</code>时，会列出当前目录下的所有文件。但是有一点需要注意的是，如果我们的目录下已经有了一个叫做clean的文件，当我们执行<code>make clean</code>时，make就分不清这个clean到底是那个了，为了避免这种情况，需要用<code>.PHONY: 伪目标1，伪目标2..</code>的方式来显式的声明伪目标。</p><h3 id="变量"><a href="#变量" class="headerlink" title="变量"></a>变量</h3><p>当我们Makefile中的规则变得非常多时，为了方便，也为了可维护性，我们一般使用变量来代替某些信息。</p><p>Makefile中定义变量的格式如下，并用<code>$(变量名)</code>的形式来使用变量：</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">变量名 &lt;赋值符&gt; 变量值</span><br></pre></td></tr></table></figure><p>其中赋值符可以是<code>=</code>、<code>:=</code>、<code>?=</code>、<code>+=</code>。它们的区别如下表：</p><table><thead><tr><th>符号</th><th>作用</th></tr></thead><tbody><tr><td><code>=</code></td><td>基本的赋值</td></tr><tr><td><code>:=</code></td><td>使用的是当前的值。例如：<code>y := $(x)</code>这句中<code>y</code>会被赋值到这句话时<code>x</code>的值，而<code>y = $(x)</code>会被赋值为<code>x</code>在当前Makefile中最终的值</td></tr><tr><td><code>?=</code></td><td>如果变量未被赋值，那么便被赋予<code>?=</code>后的值</td></tr><tr><td><code>+=</code></td><td>变量添加<code>+=</code>后面的值</td></tr></tbody></table><p>先前示例中便可精简如下：</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">CC = gcc</span><br><span class="line">LD = gcc</span><br><span class="line">CFLAGS = -c</span><br><span class="line">OBJS = main.o \</span><br><span class="line">sub.o</span><br><span class="line"></span><br><span class="line">main: $(OBJS)</span><br><span class="line">$(LD) -o  main $(OBJS)</span><br><span class="line"></span><br><span class="line">sub.o: sub.c sub.h</span><br><span class="line">$(CC) $(CFLAGS) -o sub.o sub.c</span><br><span class="line"></span><br><span class="line">main.o: main.c sub.h</span><br><span class="line">$(CC) $(CFLAGS) -o main.o main.c</span><br><span class="line"></span><br><span class="line">clean:</span><br><span class="line">rm $(OBJS)</span><br><span class="line">.PHONY: clean</span><br></pre></td></tr></table></figure><blockquote><p>Tip: 有时候我们的规则可能太长，写在一行又不好看，可以使用<code>\</code>来进行换行。</p></blockquote><h3 id="内置变量"><a href="#内置变量" class="headerlink" title="内置变量"></a>内置变量</h3><p>Makefile中还提供了一些内置变量，比如<code>$(CC)</code>代表默认的C编译器，<code>$(CXX)</code>代表默认的C++编译器。更多内置变量请参考<a href="https://www.gnu.org/software/make/manual/html_node/Implicit-Variables.html" target="_blank" rel="noopener">这里</a></p><h3 id="自动变量"><a href="#自动变量" class="headerlink" title="自动变量"></a>自动变量</h3><p>Makefile中还提供了一些特殊的变量，不用定义且会根据所在的规则而改变，减少一些目标文件名和条件文件名的输入。以下是六个常用的自动变量：</p><table><thead><tr><th>变量名</th><th>作用</th></tr></thead><tbody><tr><td><code>$@</code></td><td>目标的文件名</td></tr><tr><td><code>$&lt;</code></td><td>第一个条件的文件名</td></tr><tr><td><code>$?</code></td><td>时间戳在目标之后的所有条件，并以空格隔开这些条件</td></tr><tr><td><code>$^</code></td><td>所有条件的文件名，并以空格隔开，且排除了重复的条件</td></tr><tr><td><code>$+</code></td><td>与<code>$^</code>类似，只是没有排除重复条件</td></tr><tr><td><code>$*</code></td><td>目标的主文件名，不包含扩展名</td></tr></tbody></table><p>根据以上自动变量，我们可以将上面的示例改成更简便的形式：</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">CC = gcc</span><br><span class="line">LD = gcc</span><br><span class="line">CFLAGS = -c</span><br><span class="line">OBJS = main.o \</span><br><span class="line">sub.o</span><br><span class="line"></span><br><span class="line">main: $(OBJS)</span><br><span class="line">$(LD) -o $@ $^</span><br><span class="line"></span><br><span class="line">sub.o: sub.c sub.h</span><br><span class="line">$(CC) $(CFLAGS) -o $@ $&lt;</span><br><span class="line"></span><br><span class="line">main.o: main.c sub.h</span><br><span class="line">$(CC) $(CFLAGS) -o $@ $&lt;</span><br><span class="line"></span><br><span class="line">clean:</span><br><span class="line">rm $(OBJS)</span><br><span class="line">.PHONY: clean</span><br></pre></td></tr></table></figure><h2 id="后记"><a href="#后记" class="headerlink" title="后记"></a>后记</h2><p>另外，尽管make工具常常用来管理C/C++项目，但是用来管理其他项目也是可以的，比如汇编项目，Pascal项目，甚至是node.js的项目，make就是一个工具，来帮我们管理一些构建的规则，只要规则写的得当，怎么用就随你了。</p><p>最后，make虽然可以很好来管理项目了，但是还是不够方便。试想一下，当Makefile中的规则越来越多，又臭又长的时候，make就又显得很难用了，这也就是为什么cmake诞生的原因。通过编写Cmakelist，来指导cmake生成各种Makefile文件和project文件，从而减轻管理Makefile的负担。</p><hr><p>参考：</p><ul><li><a href="https://www.gnu.org/software/make/manual/make.html#Reading" target="_blank" rel="noopener">GNU make</a></li></ul>]]></content>
     
     <summary type="html">
     
@@ -116,8 +176,8 @@
   
   <entry>
     <title>Python正则表达式</title>
-    <link href="https://mingliangliu.com/2019/10/09/ck40wa4j00006iktmst4ni6av/"/>
-    <id>https://mingliangliu.com/2019/10/09/ck40wa4j00006iktmst4ni6av/</id>
+    <link href="https://mingliangliu.com/2019/10/09/ck5tuae130008wktmpu8n9ly8/"/>
+    <id>https://mingliangliu.com/2019/10/09/ck5tuae130008wktmpu8n9ly8/</id>
     <published>2019-10-09T13:11:38.000Z</published>
     <updated>2019-10-09T14:34:24.751Z</updated>
     
@@ -149,8 +209,8 @@
   
   <entry>
     <title>正则表达式</title>
-    <link href="https://mingliangliu.com/2019/10/08/ck40wa4jn0015iktmb7zpwn85/"/>
-    <id>https://mingliangliu.com/2019/10/08/ck40wa4jn0015iktmb7zpwn85/</id>
+    <link href="https://mingliangliu.com/2019/10/08/ck5tuae1s001bwktmn9vgcxvx/"/>
+    <id>https://mingliangliu.com/2019/10/08/ck5tuae1s001bwktmn9vgcxvx/</id>
     <published>2019-10-08T14:33:13.000Z</published>
     <updated>2019-10-08T15:31:10.124Z</updated>
     
@@ -174,8 +234,8 @@
   
   <entry>
     <title>缓冲区溢出（栈溢出）</title>
-    <link href="https://mingliangliu.com/2019/09/04/ck40wa4ml002liktml3kzzy3e/"/>
-    <id>https://mingliangliu.com/2019/09/04/ck40wa4ml002liktml3kzzy3e/</id>
+    <link href="https://mingliangliu.com/2019/09/04/ck5tuae1y001nwktm00otxh74/"/>
+    <id>https://mingliangliu.com/2019/09/04/ck5tuae1y001nwktm00otxh74/</id>
     <published>2019-09-04T13:32:03.000Z</published>
     <updated>2019-11-06T07:47:56.117Z</updated>
     
@@ -199,8 +259,8 @@
   
   <entry>
     <title>Linux系统调用表（x86_64）</title>
-    <link href="https://mingliangliu.com/2019/09/02/ck40wa4iw0003iktmv360jxg6/"/>
-    <id>https://mingliangliu.com/2019/09/02/ck40wa4iw0003iktmv360jxg6/</id>
+    <link href="https://mingliangliu.com/2019/09/02/ck5tuae120007wktmwhgsbp50/"/>
+    <id>https://mingliangliu.com/2019/09/02/ck5tuae120007wktmwhgsbp50/</id>
     <published>2019-09-02T14:42:38.000Z</published>
     <updated>2019-09-02T15:11:26.465Z</updated>
     
@@ -232,8 +292,8 @@
   
   <entry>
     <title>x86_64 Linux 运行时栈的字节对齐</title>
-    <link href="https://mingliangliu.com/2019/08/11/ck40wa4j6000ciktm5cxvxrr0/"/>
-    <id>https://mingliangliu.com/2019/08/11/ck40wa4j6000ciktm5cxvxrr0/</id>
+    <link href="https://mingliangliu.com/2019/08/11/ck5tuae1b000iwktmutvot0pu/"/>
+    <id>https://mingliangliu.com/2019/08/11/ck5tuae1b000iwktmutvot0pu/</id>
     <published>2019-08-10T16:02:09.000Z</published>
     <updated>2019-09-24T15:09:27.182Z</updated>
     
@@ -257,8 +317,8 @@
   
   <entry>
     <title>保护模式特权级概述</title>
-    <link href="https://mingliangliu.com/2019/08/10/ck40wa4jg000piktm57gzozo6/"/>
-    <id>https://mingliangliu.com/2019/08/10/ck40wa4jg000piktm57gzozo6/</id>
+    <link href="https://mingliangliu.com/2019/08/10/ck5tuae1j000vwktmfpsj9bzz/"/>
+    <id>https://mingliangliu.com/2019/08/10/ck5tuae1j000vwktmfpsj9bzz/</id>
     <published>2019-08-10T07:04:53.000Z</published>
     <updated>2019-08-10T10:30:06.302Z</updated>
     
@@ -285,8 +345,8 @@
   
   <entry>
     <title>保护模式下的寻址</title>
-    <link href="https://mingliangliu.com/2019/08/04/ck40wa4jf000miktm30wz3pa0/"/>
-    <id>https://mingliangliu.com/2019/08/04/ck40wa4jf000miktm30wz3pa0/</id>
+    <link href="https://mingliangliu.com/2019/08/04/ck5tuae1h000twktmmh9h4dja/"/>
+    <id>https://mingliangliu.com/2019/08/04/ck5tuae1h000twktmmh9h4dja/</id>
     <published>2019-08-04T12:20:03.000Z</published>
     <updated>2019-08-10T07:03:22.874Z</updated>
     
@@ -314,8 +374,8 @@
   
   <entry>
     <title>永恒之蓝漏洞复现</title>
-    <link href="https://mingliangliu.com/2019/08/04/ck40wa4jp0019iktmdfrq48xc/"/>
-    <id>https://mingliangliu.com/2019/08/04/ck40wa4jp0019iktmdfrq48xc/</id>
+    <link href="https://mingliangliu.com/2019/08/04/ck5tuae1t001dwktmk0bm9gop/"/>
+    <id>https://mingliangliu.com/2019/08/04/ck5tuae1t001dwktmk0bm9gop/</id>
     <published>2019-08-04T09:07:47.000Z</published>
     <updated>2019-08-04T16:31:45.408Z</updated>
     
@@ -339,8 +399,8 @@
   
   <entry>
     <title>Ubuntu双系统搭建GPU机器学习环境</title>
-    <link href="https://mingliangliu.com/2019/04/24/ck40wa4jl0011iktmazgam4nj/"/>
-    <id>https://mingliangliu.com/2019/04/24/ck40wa4jl0011iktmazgam4nj/</id>
+    <link href="https://mingliangliu.com/2019/04/24/ck5tuae1q0016wktmt5g3qjhk/"/>
+    <id>https://mingliangliu.com/2019/04/24/ck5tuae1q0016wktmt5g3qjhk/</id>
     <published>2019-04-24T15:12:07.000Z</published>
     <updated>2019-11-29T15:12:35.136Z</updated>
     
@@ -367,8 +427,8 @@
   
   <entry>
     <title>Flask源码浅析</title>
-    <link href="https://mingliangliu.com/2019/04/19/ck40wa4is0002iktmnev6l93n/"/>
-    <id>https://mingliangliu.com/2019/04/19/ck40wa4is0002iktmnev6l93n/</id>
+    <link href="https://mingliangliu.com/2019/04/19/ck5tuae0x0003wktm56h23dk4/"/>
+    <id>https://mingliangliu.com/2019/04/19/ck5tuae0x0003wktm56h23dk4/</id>
     <published>2019-04-19T15:38:55.000Z</published>
     <updated>2019-08-04T16:31:45.328Z</updated>
     
@@ -397,8 +457,8 @@
   
   <entry>
     <title>什么是Werkzeug</title>
-    <link href="https://mingliangliu.com/2019/04/09/ck40wa4j9000giktm2u6p30vk/"/>
-    <id>https://mingliangliu.com/2019/04/09/ck40wa4j9000giktm2u6p30vk/</id>
+    <link href="https://mingliangliu.com/2019/04/09/ck5tuae1g000owktmrfqy5e0o/"/>
+    <id>https://mingliangliu.com/2019/04/09/ck5tuae1g000owktmrfqy5e0o/</id>
     <published>2019-04-09T15:08:37.000Z</published>
     <updated>2019-08-04T16:31:45.361Z</updated>
     
@@ -425,8 +485,8 @@
   
   <entry>
     <title>什么是WSGI</title>
-    <link href="https://mingliangliu.com/2019/04/06/ck40wa4jb000hiktm96409z6k/"/>
-    <id>https://mingliangliu.com/2019/04/06/ck40wa4jb000hiktm96409z6k/</id>
+    <link href="https://mingliangliu.com/2019/04/06/ck5tuae1e000nwktm6m9t4rog/"/>
+    <id>https://mingliangliu.com/2019/04/06/ck5tuae1e000nwktm6m9t4rog/</id>
     <published>2019-04-06T11:05:50.000Z</published>
     <updated>2019-08-04T16:31:45.344Z</updated>
     
@@ -455,8 +515,8 @@
   
   <entry>
     <title>汇编语言之标志寄存器</title>
-    <link href="https://mingliangliu.com/2019/03/03/ck40wa4jq001ciktmxkstckp9/"/>
-    <id>https://mingliangliu.com/2019/03/03/ck40wa4jq001ciktmxkstckp9/</id>
+    <link href="https://mingliangliu.com/2019/03/03/ck5tuae1v001iwktmsczkxx9h/"/>
+    <id>https://mingliangliu.com/2019/03/03/ck5tuae1v001iwktmsczkxx9h/</id>
     <published>2019-03-03T13:07:55.000Z</published>
     <updated>2019-08-04T16:31:45.424Z</updated>
     
@@ -482,8 +542,8 @@
   
   <entry>
     <title>原码反码和补码</title>
-    <link href="https://mingliangliu.com/2019/02/28/ck40wa4jk000xiktmpx9p99rw/"/>
-    <id>https://mingliangliu.com/2019/02/28/ck40wa4jk000xiktmpx9p99rw/</id>
+    <link href="https://mingliangliu.com/2019/02/28/ck5tuae1k000ywktmkyoyxo7f/"/>
+    <id>https://mingliangliu.com/2019/02/28/ck5tuae1k000ywktmkyoyxo7f/</id>
     <published>2019-02-28T09:35:08.000Z</published>
     <updated>2019-08-04T16:31:45.361Z</updated>
     
@@ -502,39 +562,6 @@
     
     
       <category term="数字逻辑" scheme="https://mingliangliu.com/tags/%E6%95%B0%E5%AD%97%E9%80%BB%E8%BE%91/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>汇编转移指令</title>
-    <link href="https://mingliangliu.com/2019/02/09/ck40wa4jt001giktmf411lpxb/"/>
-    <id>https://mingliangliu.com/2019/02/09/ck40wa4jt001giktmf411lpxb/</id>
-    <published>2019-02-09T03:46:09.000Z</published>
-    <updated>2019-08-04T16:31:45.457Z</updated>
-    
-    <content type="html"><![CDATA[<p>在8086CPU中，转移指令可分为如下几类  </p><ul><li>无条件转移指令，如jmp</li><li>条件转移指令，如jcxz</li><li>循环指令，如loop</li><li>过程</li><li>中断</li></ul><p>在此，只先讨论无条件转移中的jmp，其他东西以后再更</p><p>jmp为无条件转移指令，可以只修改IP，也可以同时修改CS和IP</p><h2 id="依据位移进行转移的jmp指令"><a href="#依据位移进行转移的jmp指令" class="headerlink" title="依据位移进行转移的jmp指令"></a>依据位移进行转移的jmp指令</h2><p>所谓依据位移呢，就是根据转移指令到要转移的目的地址之间相差的字节数来进行转移的，相差的字节数由编译器进行计算给出，在生成的机器指令中只包含相差的字节数，不包含目的地址，这样会是的程序更加的灵活</p><h3 id="jmp-short-标号"><a href="#jmp-short-标号" class="headerlink" title="jmp short 标号"></a>jmp short 标号</h3><p>这种格式的jmp指令实现的是段内短转移，他对IP的修改范围为-128~127，超过这个范围会报错</p><p>使用如下面的例子</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">codesg segment</span><br><span class="line">    start: mov ax,0</span><br><span class="line">           jmp short s</span><br><span class="line">           add ax,1</span><br><span class="line">        s: inc ax</span><br><span class="line">codesg ends</span><br><span class="line">end start</span><br></pre></td></tr></table></figure><p>参照书上的总结就是：jmp short 标号 的功能为：（IP）=(IP)+8位位移</p><ul><li>8位位移=标号处的地址-jmp指令后的第一个字节的地址（为什么是指令后第一个字节的地址，是因为和cpu执行指令的方式有关）</li><li>short指明此处的位移为8位位移</li><li>8位位移的范围为-128~127，用补码表示</li><li>8位位移由编译程序在编译时算出</li></ul><h3 id="jmp-near-ptr-标号"><a href="#jmp-near-ptr-标号" class="headerlink" title="jmp near ptr 标号"></a>jmp near ptr 标号</h3><p>它和jmp short 标号的功能相似，不过是实现的段内近转移</p><p>它实现的功能为：（IP）=（IP）+ 16为位移，类似上面</p><ul><li>16位位移=标号处的地址-jmp指令后的第一个字节的地址</li><li>near ptr 指明此处的位移为16位位移，进行的是段内近转移</li><li>16位位移的范围为-32768~32767，用补码表示</li><li>16为位移由编译程序在编译时给出</li></ul><h2 id="转移的目的地址在指令中的jmp指令"><a href="#转移的目的地址在指令中的jmp指令" class="headerlink" title="转移的目的地址在指令中的jmp指令"></a>转移的目的地址在指令中的jmp指令</h2><p>前面的jmp指令只能进行段间的转移，但是我们有时候需要转移的“更远”，这时候就需要这种类型的指令了</p><h3 id="jmp-far-ptr-标号"><a href="#jmp-far-ptr-标号" class="headerlink" title="jmp far ptr 标号"></a>jmp far ptr 标号</h3><p>此指令实现的是段间转移，又称为远转移功能如下</p><ul><li>（CS）=标号所在段的段地址，（IP）=标号在段中的偏移地址</li><li>far ptr 指明了用标号的段地址和偏移地址修改CS和IP</li></ul><p>例如：</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">codesg segment</span><br><span class="line"> start: mov ax,0</span><br><span class="line">        mov bx,0</span><br><span class="line">        jmp far ptr s</span><br><span class="line">        db 256 dup (0) ;这里用来占空</span><br><span class="line">     s: add ax,1</span><br><span class="line">        inc ax</span><br><span class="line">codesg ends</span><br><span class="line">end start</span><br></pre></td></tr></table></figure><h2 id="转移地址在寄存器中的jmp指令"><a href="#转移地址在寄存器中的jmp指令" class="headerlink" title="转移地址在寄存器中的jmp指令"></a>转移地址在寄存器中的jmp指令</h2><h3 id="jmp-16位reg"><a href="#jmp-16位reg" class="headerlink" title="jmp 16位reg"></a>jmp 16位reg</h3><p>功能：（IP）=（16位reg）</p><h2 id="转移地址在内存中的jmp指令"><a href="#转移地址在内存中的jmp指令" class="headerlink" title="转移地址在内存中的jmp指令"></a>转移地址在内存中的jmp指令</h2><p>转移地址在内存中的jmp指令有两种格式：段内转移和段间转移</p><h3 id="jmp-word-ptr-内存单元地址（段内转移）"><a href="#jmp-word-ptr-内存单元地址（段内转移）" class="headerlink" title="jmp word ptr 内存单元地址（段内转移）"></a>jmp word ptr 内存单元地址（段内转移）</h3><p>功能：</p><ul><li>从内存单元地址处开始存放一个字，是转移的目的偏移地址</li><li>内存单元地址可用寻址方式的任一格式给出</li></ul><p>例如：</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">mov ax,0123H</span><br><span class="line">mov ds:[0],ax</span><br><span class="line">jmp word ptr ds:[0]</span><br></pre></td></tr></table></figure><h3 id="jmp-dword-ptr-内存单元地址（段间转移）"><a href="#jmp-dword-ptr-内存单元地址（段间转移）" class="headerlink" title="jmp dword ptr 内存单元地址（段间转移）"></a>jmp dword ptr 内存单元地址（段间转移）</h3><p>功能：</p><ul><li>从内存单元地址处开始存放者两个字，高地址的字为转移的目的段地址，低地址处为转移的目的偏移地址</li><li>（CS）=（内存单元地址+2），（IP）= （内存单元地址）</li><li>内存单元地址可以用寻址方式的任何一种格式给出</li></ul><p>例如:</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">mov ax,0123H</span><br><span class="line">mov ds:[0],ax</span><br><span class="line">mov word ptr ds:[2],0</span><br><span class="line">jmp dword ptr ds:[0]</span><br></pre></td></tr></table></figure><hr><p>本文总结自王爽的《汇编语言》，如有错误欢迎指正</p>]]></content>
-    
-    <summary type="html">
-    
-      
-      
-        &lt;p&gt;在8086CPU中，转移指令可分为如下几类  &lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;无条件转移指令，如jmp&lt;/li&gt;
-&lt;li&gt;条件转移指令，如jcxz&lt;/li&gt;
-&lt;li&gt;循环指令，如loop&lt;/li&gt;
-&lt;li&gt;过程&lt;/li&gt;
-&lt;li&gt;中断&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;在此，只先讨论
-      
-    
-    </summary>
-    
-      <category term="汇编" scheme="https://mingliangliu.com/categories/%E6%B1%87%E7%BC%96/"/>
-    
-    
-      <category term="汇编" scheme="https://mingliangliu.com/tags/%E6%B1%87%E7%BC%96/"/>
     
   </entry>
   
