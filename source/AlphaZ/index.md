@@ -30,21 +30,11 @@ $$
  - 《一个操作系统的实现》 于渊
  - 《x86汇编语言：从实模式到保护模式》 李忠
 
-由于我个人比较偏爱Linux（因为开发方便），并且于渊老师也建议使用Linux开发，所以便使用Linux作为基本的开发环境：
+开发环境如下：
 
 - Ubuntu 18.04 LTS
-- gcc v7.4.0
+- gcc v4.8
 - NASM v2.13
 - bochs v2.6.10
 
-<div style="display: block; text-align: center">
-<h1>目录</h1>
-</div>
-
-## 一些工具
-
-- [make工具简介](/2019/10/14/ck42sdjrb000cqqjx0aoth4rg/#more)
-
-## 开发过程
-
-- [AlphaZ OS: 开发环境配置](/2019/12/12/ck42snhmg0002i3jxz91nfb6u/#more)
+当前该项目正在开发中，你可以在[这里](https://github.com/lml256/AlphaZ-OS)看到项目的源码和进度
