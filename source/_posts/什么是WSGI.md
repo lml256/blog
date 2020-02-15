@@ -1,10 +1,11 @@
 ---
 title: 什么是WSGI
-date: 2019-04-06 19:05:50
-tags: 
-- Python
-- Web
+tags:
+  - Python
+  - Web
 categories: Python
+abbrlink: a2f3d6ca
+date: 2019-04-06 19:05:50
 ---
 
 WSGI全称为Python Web Server Gateway Interface，Python Web服务器网关接口，它是介于Web服务器和Web应用程序（或Web框架）之间的一种简单而通用的接口。

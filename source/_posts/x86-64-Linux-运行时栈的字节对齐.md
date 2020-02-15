@@ -1,8 +1,9 @@
 ---
 title: x86_64 Linux 运行时栈的字节对齐
-date: 2019-08-11 00:02:09
 tags: 汇编
 categories: 汇编
+abbrlink: 37e2c5bb
+date: 2019-08-11 00:02:09
 ---
 
 ## 前言

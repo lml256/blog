@@ -1,10 +1,11 @@
 ---
 title: Linux系统调用表（x86_64）
-date: 2019-09-02 22:42:38
 tags:
-- 汇编
-- Linux
+  - 汇编
+  - Linux
 categories: Linux
+abbrlink: a6c4b05f
+date: 2019-09-02 22:42:38
 ---
 
 内核版本 Linux 4.7

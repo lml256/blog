@@ -1,8 +1,9 @@
 ---
 title: make工具简介
-date: 2019-10-14 21:58:35
 tags: Linux
 categories: Linux
+abbrlink: 6aacce01
+date: 2019-10-14 21:58:35
 ---
 
 在Linux C/C++的开发过程中，当源代码文件较少时，我们可以手动使用gcc或g++进行编译链接，但是当源代码文件较多且依赖变得复杂时，我们就需要一种简单好用的工具来帮助我们管理。于是，make应运而生。

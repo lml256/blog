@@ -1,10 +1,11 @@
 ---
 title: Python正则表达式
-date: 2019-10-09 21:11:38
 tags:
-- Python
-- 正则表达式
+  - Python
+  - 正则表达式
 categories: 正则表达式
+abbrlink: fc635c56
+date: 2019-10-09 21:11:38
 ---
 
 python正则表达式的用途不过多赘述

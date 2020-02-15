@@ -1,5 +1,6 @@
 ---
 title: 健壮的I/O(RIO)
+abbrlink: 8fd6efd8
 date: 2019-10-19 11:52:47
 tags:
 categories:

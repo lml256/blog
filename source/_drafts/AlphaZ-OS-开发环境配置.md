@@ -1,10 +1,11 @@
 ---
 title: 'AlphaZ OS: 开发环境配置'
-date: 2019-12-12 22:03:28
 tags:
-- 操作系统
-- AlphaZ
+  - 操作系统
+  - AlphaZ
 categories: AlphaZ
+abbrlink: 8801d300
+date: 2019-12-12 22:03:28
 ---
 
 {% note success %}

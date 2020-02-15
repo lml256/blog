@@ -1,10 +1,11 @@
 ---
 title: 什么是Werkzeug
-date: 2019-04-09 23:08:37
 tags:
-- Python
-- Web
+  - Python
+  - Web
 categories: Python
+abbrlink: 59fca22f
+date: 2019-04-09 23:08:37
 ---
 
 上一节介绍了[什么是WSGI](/2019/04/06/什么是WSGI/#more)，这一节我们看看Werkzeug

@@ -1,11 +1,12 @@
 ---
 title: Flask源码浅析
-date: 2019-04-19 23:38:55
 tags:
-- Python
-- Web
-- Flask
+  - Python
+  - Web
+  - Flask
 categories: Python
+abbrlink: 584c5358
+date: 2019-04-19 23:38:55
 ---
 
 ## 前言

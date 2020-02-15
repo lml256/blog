@@ -1,8 +1,9 @@
 ---
 title: Github Pull Request的提出与采纳
-date: 2020-01-24 13:19:54
 tags: git
 categories: git
+abbrlink: c97c9d53
+date: 2020-01-24 13:19:54
 ---
 
 这一文来讲解一下Github Pull Request（以下简称PR）的使用方法：

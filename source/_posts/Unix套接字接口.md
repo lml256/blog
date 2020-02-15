@@ -1,8 +1,9 @@
 ---
 title: Unix套接字接口
-date: 2019-11-20 17:40:22
 tags: Linux
 categories: Linux
+abbrlink: 28c7bd33
+date: 2019-11-20 17:40:22
 ---
 
 ## 简介
